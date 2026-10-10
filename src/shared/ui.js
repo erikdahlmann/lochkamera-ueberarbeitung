@@ -310,27 +310,32 @@ function insidePoly(P,x,y){var c=false;for(var i=0,j=P.length-1;i<P.length;j=i++
 function traceShapes(px,py,ux,uy,shapes,n,maxLen){
   var path=[[px,py]],hits=[];maxLen=maxLen||400;
   for(var it=0;it<40;it++){
-    var best=1e9,bn=null,bs=-1,bq=null;
+    var best=1e9,bn=null,bs=-1,bo=null;
     for(var k=0;k<shapes.length;k++){var S=shapes[k],P=S.pts;
       for(var i=0,j=P.length-1;i<P.length;j=i++){
         var ax=P[j][0],ay=P[j][1],ex=P[i][0]-ax,ey=P[i][1]-ay,den=ux*ey-uy*ex;if(Math.abs(den)<1e-12)continue;
         var t=((ax-px)*ey-(ay-py)*ex)/den,s=((ax-px)*uy-(ay-py)*ux)/den;
         if(t>1e-6&&s>=-1e-9&&s<=1+1e-9&&t<best){
-          var L=Math.hypot(ex,ey),nrm=[-ey/L,ex/L],tt=t;
+          var L=Math.hypot(ex,ey),nc=[-ey/L,ex/L],nrm=nc,tt=t,skip=false;
           /* Kante auf einem Kreisbogen? Dann genau mit dem Kreis schneiden */
           for(var a=0;a<S.arcs.length;a++){var A=S.arcs[a];if(i>A.i0&&i<=A.i1){
-            var ox=px-A.cx,oy=py-A.cy,B=ux*ox+uy*oy,C=ox*ox+oy*oy-A.r*A.r,D=B*B-C;
+            var ox=px-A.cx,oy=py-A.cy,B=ux*ox+uy*oy,C=ox*ox+oy*oy-A.r*A.r,D=B*B-C;skip=true;
             if(D>=0){var r1=-B-Math.sqrt(D),r2=-B+Math.sqrt(D),tc=Math.abs(r1-t)<Math.abs(r2-t)?r1:r2;
-              if(tc>1e-6&&Math.abs(tc-t)<2){tt=tc;var qx0=px+ux*tt-A.cx,qy0=py+uy*tt-A.cy;nrm=[qx0/A.r,qy0/A.r];}}
+              if(tc>1e-6&&Math.abs(tc-t)<2){skip=false;tt=tc;nrm=[(px+ux*tt-A.cx)/A.r,(py+uy*tt-A.cy)/A.r];}}
             break;}}
-          if(tt<best){best=tt;bn=nrm;bs=k;}}}}
+          if(skip||tt>=best)continue;
+          /* Außenseite über die Sehne bestimmen (funktioniert für Kanten und Bögen) */
+          var mx=ax+ex/2,my=ay+ey/2,out=insidePoly(P,mx+nc[0]*1e-3,my+nc[1]*1e-3)?[-nc[0],-nc[1]]:nc;
+          best=tt;bn=nrm;bs=k;bo=out;}}}
     if(bs<0){path.push([px+ux*maxLen,py+uy*maxLen]);break;}
     var qx=px+ux*best,qy=py+uy*best;path.push([qx,qy]);
-    var nx=bn[0],ny=bn[1];if(nx*ux+ny*uy>0){nx=-nx;ny=-ny;}
-    var inG=insidePoly(shapes[bs].pts,qx-ux*1e-3,qy-uy*1e-3),n1=inG?n:1,n2=inG?1:n,eta=n1/n2,ci=-(nx*ux+ny*uy),kk=1-eta*eta*(1-ci*ci),u0=[ux,uy],tir=kk<0;
+    var into=(ux*bo[0]+uy*bo[1])<0,nx=bn[0],ny=bn[1];
+    if(nx*bo[0]+ny*bo[1]<0){nx=-nx;ny=-ny;}          // Normale zeigt nach außen
+    if(nx*ux+ny*uy>0){nx=-nx;ny=-ny;}                // … und gegen den Strahl
+    var n1=into?1:n,n2=into?n:1,eta=n1/n2,ci=-(nx*ux+ny*uy),kk=1-eta*eta*(1-ci*ci),u0=[ux,uy],tir=kk<0;
     if(tir){ux=ux+2*ci*nx;uy=uy+2*ci*ny;}else{var f=eta*ci-Math.sqrt(kk);ux=eta*ux+f*nx;uy=eta*uy+f*ny;}
     var L2=Math.hypot(ux,uy);ux/=L2;uy/=L2;
-    hits.push({x:qx,y:qy,nx:nx,ny:ny,u0:u0,u1:[ux,uy],into:!inG,tir:tir});
+    hits.push({x:qx,y:qy,nx:nx,ny:ny,u0:u0,u1:[ux,uy],into:into,tir:tir});
     px=qx+ux*1e-3;py=qy+uy*1e-3;
   }
   return {path:path,hits:hits};
