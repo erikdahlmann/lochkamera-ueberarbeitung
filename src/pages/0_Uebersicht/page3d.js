@@ -1,13 +1,15 @@
 
 (function(){
-var SW=120,SH=90,Bm=150,st={d:1};
-var scr=new ScreenCam($('#scr'),{W:480,H:360,sw:SW,sh:SH});
+var SW=150,SH=110,Bm=150,st={d:2},HAUS_REF=12; // gleiche Belichtung wie in Station 1 und 2
+var scr=new ScreenCam($('#scr'),{W:480,H:352,sw:SW,sh:SH});
 var v=new View3D($('#v0'),{shadows:true,logDepth:true,env:false,near:0.01,far:9000,minDist:0.12,maxDist:80,fov:40,aspect:1.9,
   pos:[0.62,0.16,0.42],target:[0.02,-0.02,0],
   presets:[{label:'Hinter der Kamera',pos:[0.5,0.05,0.07],target:[0.1,-0.01,0]},{label:'Landschaft',pos:[2.2,0.8,2.6],target:[-12,-1,0]},{label:'Von vorne',pos:[-0.6,0.1,0.35],target:[0.05,0,0]}]});
 var tex=null,box=null,rays=null,houseTop=V3(-17.26,3.0,1.62),houseFoot=V3(-17.26,-3,1.62);
 var land2=null;
-if(v.ok){var s=v.scene;s.add(makeLandscape());s.fog=new T3.Fog(0xa9c3de,200,4600);
+if(v.ok){var s=v.scene,land=makeLandscape();s.add(land);
+  /* Rauch, Vögel und Wolken bewegen sich (etwa 30 Bilder pro Sekunde) */
+  var lastT=0;v.anim=function(t){if(t-lastT<33)return false;lastT=t;land.userData.tick(t);return true;};s.fog=new T3.Fog(0xa9c3de,200,4600);
   v.renderer.toneMappingExposure=1.0;
   tex=new T3.CanvasTexture($('#scr'));tex.colorSpace=T3.SRGBColorSpace;
   var g=new T3.Group();g.scale.setScalar(0.001);s.add(g);
@@ -27,7 +29,7 @@ var pend=false;
 function renderScreen(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;
   if(!land2)land2=landscapeScene();
   var R=blurDiameter(st.d,Bm,20000,null)/2,E=relBrightness(st.d,Bm);
-  scr.render(land2,Bm,R,screenGain(E,0.22),{near:0.3,far:9000});
+  scr.render(land2,Bm,R,screenGain(E,HAUS_REF),{near:0.3,far:9000});
   if(tex){tex.needsUpdate=true;v.request();}
   $('#info').textContent='Lichtfleck eines Punktes: '+fmtLen(blurDiameter(st.d,Bm,20000,null))+' · Helligkeit: '+fmt(E,E<1?2:1)+' ×';
 });}

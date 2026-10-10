@@ -452,10 +452,32 @@ function makeLandscape(o){o=o||{};var G=new T3.Group(),R=rng(42);
   var fl=[];var r4=rng(11);for(var q2=0;q2<260;q2++){var fx=-9-r4()*28,fz2=(r4()-0.5)*40;if(Math.abs(fx+20)<5&&Math.abs(fz2)<5)continue;fl.push({g:new T3.SphereGeometry(0.035,5,4),m:M4(fx,landHeight(fx,fz2)+0.1,fz2),c:[0xffffff,0xffe066,0xff8787,0xb197fc][q2%4]});}
   G.add(new T3.Mesh(mergeGeos(fl),new T3.MeshStandardMaterial({vertexColors:true,roughness:0.7})));
   // Wolken
-  var cm=new T3.MeshStandardMaterial({color:0xffffff,roughness:1,emissive:0xb8c4d6,emissiveIntensity:0.35});var r5=rng(9);
+  var cm=new T3.MeshStandardMaterial({color:0xffffff,roughness:1,emissive:0xb8c4d6,emissiveIntensity:0.35});var r5=rng(9),clouds=[];
   for(var cl=0;cl<11;cl++){var ca=(-1+2*cl/10)*0.95+(r5()-0.5)*0.15,cd=500+r5()*900,cy=110+r5()*230,parts2=[];
     for(var pp=0;pp<9;pp++){parts2.push({g:new T3.IcosahedronGeometry(22+r5()*26,2),m:M4((r5()-0.5)*110,(r5()-0.2)*22,(r5()-0.5)*70,1,0.62,1),c:0xffffff});}
-    var cmesh=new T3.Mesh(mergeGeos(parts2),cm);cmesh.position.set(-Math.cos(ca)*cd,cy,-Math.sin(ca)*cd);G.add(cmesh);}
+    var cmesh=new T3.Mesh(mergeGeos(parts2),cm);cmesh.position.set(-Math.cos(ca)*cd,cy,-Math.sin(ca)*cd);cmesh.userData.z0=cmesh.position.z;G.add(cmesh);clouds.push(cmesh);}
+  /* Teich mit Schilf */
+  var px=-9,pz=-9,py=landHeight(px,pz)+0.04;
+  var pond=new T3.Mesh(new T3.CircleGeometry(1,48),new T3.MeshStandardMaterial({color:0x4f7fa8,roughness:0.08,metalness:0.2,emissive:0x23405c,emissiveIntensity:0.6}));
+  pond.rotation.x=-Math.PI/2;pond.scale.set(3.4,2.2,1);pond.position.set(px,py,pz);pond.receiveShadow=true;G.add(pond);
+  var shore=new T3.Mesh(new T3.RingGeometry(1,1.18,48),stdMat(0x7d6b4f,0.95));shore.rotation.x=-Math.PI/2;shore.scale.set(3.4,2.2,1);shore.position.set(px,py+0.01,pz);G.add(shore);
+  var reed=[],r6=rng(17);for(var q3=0;q3<40;q3++){var a3=r6()*6.3,rx=px+Math.cos(a3)*3.6*(0.95+r6()*0.15),rz=pz+Math.sin(a3)*2.4*(0.95+r6()*0.15),hh2=0.6+r6()*0.7;
+    reed.push({g:new T3.CylinderGeometry(0.015,0.025,hh2,4),m:M4(rx,landHeight(rx,rz)+hh2/2,rz),c:[0x6b8f3a,0x8aa64a,0x5d7d33][q3%3]});}
+  var reedM=new T3.Mesh(mergeGeos(reed),new T3.MeshStandardMaterial({vertexColors:true,roughness:0.9}));reedM.castShadow=true;G.add(reedM);
+  /* Rauch aus dem Schornstein */
+  H.updateMatrixWorld(true);var chim=H.localToWorld(V3(-1.2,6.1,-1.7));
+  var smokeTex=canvasTex(64,64,function(c){var g=c.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'rgba(215,215,215,.75)');g.addColorStop(1,'rgba(215,215,215,0)');c.fillStyle=g;c.fillRect(0,0,64,64);});
+  var smoke=[];for(var k2=0;k2<14;k2++){var sm=new T3.Sprite(new T3.SpriteMaterial({map:smokeTex,transparent:true,depthWrite:false,opacity:0.6}));sm.userData.ph=k2/14;G.add(sm);smoke.push(sm);}
+  /* Vögel */
+  var birds=[],bm2=new T3.MeshBasicMaterial({color:0x2b2d33,side:T3.DoubleSide});
+  for(var b2=0;b2<6;b2++){var bg=new T3.Group(),wg=new T3.PlaneGeometry(0.55,0.12);wg.translate(0.27,0,0);
+    var w1=new T3.Mesh(wg,bm2),w2=new T3.Mesh(wg,bm2);w2.scale.x=-1;bg.add(w1);bg.add(w2);bg.userData={w1:w1,w2:w2,ph:b2*1.3,r:26+b2*2.5,h:20+b2*1.6};G.add(bg);birds.push(bg);}
+  function tick(t){var s=t/1000;
+    smoke.forEach(function(sm){var u=(s*0.12+sm.userData.ph)%1;sm.position.set(chim.x+u*2.2+Math.sin(u*9+sm.userData.ph*6)*0.25,chim.y+u*7,chim.z+u*1.2);var sz=0.6+u*2.6;sm.scale.set(sz,sz,1);sm.material.opacity=0.85*(1-u)*Math.min(1,u*8);});
+    birds.forEach(function(bg,i){var d=bg.userData,a=s*0.18+d.ph;bg.position.set(LAND_HOUSE.x-6+Math.cos(a)*d.r,d.h+Math.sin(s*0.7+i)*0.6,LAND_HOUSE.z+Math.sin(a)*d.r*0.6);bg.rotation.y=-a;
+      var fl=Math.sin(s*9+i*2)*0.6;d.w1.rotation.x=fl;d.w2.rotation.x=fl;});
+    clouds.forEach(function(c,i){c.position.z=c.userData.z0+Math.sin(s*0.01+i)*60;});}
+  tick(0);G.userData.tick=tick;
   G.userData.sun=sun;
   return G;}
 function landscapeScene(){var s=new T3.Scene();s.add(makeLandscape());s.fog=new T3.Fog(0xa9c3de,200,4600);return s;}
