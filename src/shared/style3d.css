@@ -5,9 +5,9 @@
 .v3d-wrap.light{background:radial-gradient(ellipse at 50% 30%,#3a4458 0%,#1d2330 60%,#10131a 100%)}
 .v3d-wrap canvas{display:block;border-radius:0;background:transparent;width:100%}
 .v3d-labels{position:absolute;left:0;top:0;pointer-events:none}
-.l3d{font:600 13px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#fff;background:rgba(12,15,22,.72);padding:2px 7px;border-radius:7px;white-space:nowrap;pointer-events:none}
+.l3d{font:600 14px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#fff;background:rgba(12,15,22,.72);padding:2px 7px;border-radius:7px;white-space:nowrap;pointer-events:none}
 .l3d.plain{background:none;text-shadow:0 1px 3px #000,0 0 6px #000}
-.l3d.big{font-size:16px;font-weight:800}
+.l3d.big{font-size:18px;font-weight:800}
 .l3d.warn{background:rgba(201,42,42,.85);font-size:15px}
 .l3d.dim{opacity:.85;font-weight:500}
 .v3d-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
@@ -22,3 +22,18 @@ body.v3d-lock{overflow:hidden}
 .screenbox{position:relative}
 .screenbox .tag{position:absolute;left:8px;top:8px;font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:1px 7px;border-radius:6px;pointer-events:none}
 .grid2 .ctls{grid-template-columns:1fr}
+
+/* Szene aktiv (Mausrad zoomt erst nach einem Klick hinein) */
+.v3d-wrap.active{box-shadow:0 0 0 3px #4dabf7}
+.v3d-note{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:rgba(12,15,22,.82);color:#fff;font-size:14px;border-radius:10px;padding:6px 12px;pointer-events:none;opacity:0;transition:opacity .3s;z-index:3;white-space:nowrap}
+.v3d-note.show{opacity:1}
+/* Scrollleiste am rechten Rand für Finger (nur Touch-Geräte) */
+.v3d-rail{display:none;position:absolute;right:0;top:0;bottom:0;width:34px;z-index:2;touch-action:pan-y;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.07));border-left:1px dashed rgba(255,255,255,.18)}
+.v3d-rail::after{content:"⇕";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,.55);font-size:18px}
+@media (pointer:coarse){.v3d-rail{display:block}}
+.v3d-full .v3d-rail{display:none}
+/* Regler im Vollbild */
+.v3d-full .v3d-ctl{background:#f4f1ea;border-radius:12px;padding:6px 12px;margin-top:6px;max-height:34vh;overflow:auto}
+.v3d-full .v3d-ctl .ctls{margin-top:0}
+.v3d-ctlhome{display:contents}
+.l3d.num{background:#fff;color:#1d2230;border-radius:50%;width:22px;height:22px;padding:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}

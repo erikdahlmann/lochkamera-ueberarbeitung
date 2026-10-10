@@ -18,6 +18,11 @@ DIST = os.path.join(HIER, 'dist')
 SEITEN = ['0_Uebersicht', '1_Unschaerfe', '2_Licht_buendeln', '3_Licht_durch_Glas',
           '4_Brechung', '5_Experimente', '6_Bildentstehung']
 OHNE_3D = {'5_Experimente'}          # Seiten ohne WebGL-Szene
+NAMEN = ['Übersicht', 'Unschärfe', 'Licht bündeln', 'Licht durch Glas', 'Brechung', 'Experimente', 'Bildentstehung']
+# Speicher-Präfixe wie im Original (nicht ändern, sonst gehen Eingaben verloren)
+PREFIX = {1: 'lk1', 2: 'lk2', 3: 'lk3g', 4: 'lk3', 5: 'lk4', 6: 'lk5'}
+# Felder, die erst per JavaScript entstehen (für die Fortschrittsanzeige)
+EXTRA_FELDER = {2: 18, 6: 7}
 
 
 def lies(*teile):
@@ -31,15 +36,50 @@ def fassung(text, ist3d):
     return muster.sub(lambda m: m.group(1) if ist3d else m.group(2), text)
 
 
+def navigation(seite, ist3d):
+    i = SEITEN.index(seite)
+    links = ['<a href="../index.html">Start</a>']
+    for k, s in enumerate(SEITEN):
+        text = 'Übersicht' if k == 0 else str(k)
+        attr = ' class="cur" aria-current="page"' if k == i else ''
+        if k in PREFIX:
+            body = fassung(lies('pages', s, 'body.html'), ist3d)
+            n = len(re.findall(r'data-save="', body)) + EXTRA_FELDER.get(k, 0)
+            attr += ' data-prefix="%s" data-n="%d"' % (PREFIX[k], n)
+        titel = NAMEN[k] if k == 0 else 'Station %d: %s' % (k, NAMEN[k])
+        links.append('<a href="%s.html"%s title="%s">%s</a>' % (s, attr, titel, text))
+    anders = ('../lochkamera/%s.html' % seite, 'einfache Fassung (2D)') if ist3d else \
+             ('../lochkamera_3d/%s.html' % seite, '3D-Fassung')
+    links.append('<span class="sep"></span><a class="alt" href="%s">⇄ %s</a>' % anders)
+    return '<nav class="lknav" aria-label="Stationen">' + ''.join(links) + '</nav>'
+
+
+def blaettern(seite):
+    i = SEITEN.index(seite)
+    teile = []
+    if i > 0:
+        teile.append('<a href="%s.html">← %s</a>' % (SEITEN[i - 1], 'Übersicht' if i == 1 else 'Station %d' % (i - 1)))
+    else:
+        teile.append('<span></span>')
+    if i < len(SEITEN) - 1:
+        teile.append('<a class="next" href="%s.html">Weiter: Station %d – %s →</a>' % (SEITEN[i + 1], i + 1, NAMEN[i + 1]))
+    return '<div class="pager">' + ''.join(teile) + '</div>'
+
+
 def baue(seite, ist3d):
     teile = [lies('pages', seite, 'head.html'), '<style>', lies('shared', 'style.css')]
     if ist3d:
         teile.append(lies('shared', 'style3d.css'))
     teile.append('</style>')
-    teile.append(fassung(lies('pages', seite, 'body.html'), ist3d))
+    body = fassung(lies('pages', seite, 'body.html'), ist3d)
+    body = body.replace('</div></header>', navigation(seite, ist3d) + '</div></header>', 1)
+    body = body.replace('</main>', blaettern(seite) + '\n</main>', 1)
+    teile.append(body)
     if ist3d and seite not in OHNE_3D:
         teile += ['<script>', lies('vendor', 'three.bundle.js'), lies('shared', 'lib3d.js'), '</script>\n']
     js = lies('pages', seite, 'page3d.js' if ist3d else 'page2d.js')
+    if os.path.exists(os.path.join(SRC, 'pages', seite, 'common.js')):
+        js += lies('pages', seite, 'common.js')
     teile += ['<script>', fassung(lies('shared', 'ui.js'), ist3d), js, '</script>', lies('shared', 'legal.html')]
     return ''.join(teile)
 

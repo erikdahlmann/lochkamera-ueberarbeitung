@@ -73,3 +73,44 @@ footer.legal{padding-top:0;font-size:13px}
 footer.legal details{background:transparent;margin:6px 0}
 footer.legal details>summary{font-weight:600;color:var(--muted)}
 footer.legal p{margin:0 0 10px;line-height:1.45}
+
+/* ---------- Navigation ---------- */
+.lknav{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:12px;font-size:15px}
+.lknav a{color:#fff;text-decoration:none;border-radius:999px;padding:3px 11px;background:rgba(255,255,255,.1);min-height:32px;display:inline-flex;align-items:center;gap:4px}
+.lknav a:hover{background:rgba(255,255,255,.2)}
+.lknav a.cur{background:#ffc078;color:#1d2230;font-weight:800}
+.lknav a.started::after{content:"•";color:#ffc078}
+.lknav a.done::after{content:"✓";color:#8ce99a;font-weight:800}
+.lknav a.cur.started::after,.lknav a.cur.done::after{color:#1d2230}
+.lknav .sep{flex:1}
+.lknav a.alt{background:transparent;border:1px solid rgba(255,255,255,.35)}
+.pager{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0 0}
+.pager a{display:inline-block;background:var(--card);border-radius:14px;padding:12px 18px;text-decoration:none;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.pager a.next{background:var(--accent);color:#fff}
+/* ---------- Bedienung ---------- */
+:focus-visible{outline:3px solid #1971c2;outline-offset:2px}
+.ctl.off{opacity:.38}
+.seg button[aria-pressed="true"]{background:#1d2230;color:#fff;font-weight:700}
+#saveBadge{position:fixed;right:14px;bottom:14px;z-index:900;background:#2b8a3e;color:#fff;border-radius:10px;padding:6px 12px;font-size:14px;font-weight:700;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;pointer-events:none}
+#saveBadge.show{opacity:1;transform:none}
+#saveBadge.bad{background:#c92a2a;opacity:1;transform:none}
+.hint{background:#f1f3f5;border-radius:10px;padding:8px 12px;font-size:15px;color:var(--muted);margin:8px 0}
+.warnline{color:#c92a2a;font-weight:700}
+.chartbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px;margin-top:10px}
+.chartbox canvas{background:#fff;border-radius:8px}
+.glossar dt{font-weight:800;margin-top:8px}
+.glossar dd{margin:2px 0 0 0;color:var(--ink)}
+@media (min-width:760px){.glossar{display:grid;grid-template-columns:200px 1fr;gap:4px 16px}.glossar dt,.glossar dd{margin:0;padding:6px 0;border-bottom:1px solid var(--line)}}
+.modell{font-size:14px;color:var(--muted);border-left:3px solid #ced4da;padding-left:10px;margin:8px 0}
+/* ---------- Drucken / PDF ---------- */
+@media print{
+  body{background:#fff;font-size:12pt}
+  header{background:#fff;color:#000;padding:0 0 8px;border-bottom:2px solid #000}
+  header p,header .kicker{color:#000}
+  .lknav,.pager,button,.v3d-bar,.nojs,#saveBadge,footer.legal{display:none!important}
+  .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid-page;margin:10px 0}
+  details>div{display:block}
+  details:not([open])>summary~*{display:none}
+  textarea{border:1px solid #999;min-height:0;height:auto}
+  canvas{max-height:9cm;width:auto!important;max-width:100%}
+}
