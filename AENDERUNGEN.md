@@ -8,6 +8,22 @@ S1 bis S6 = Station 1 bis 6, S0 = Übersicht.
 
 Gesamturteil: Das Original ist technisch und fachlich stark. Die Liste unten ist Feinschliff, keine Rettung.
 
+## Stand 10.10.2026: alles umgesetzt
+
+Alle 61 Punkte sind umgesetzt, in der 3D- und in der 2D-Fassung. Beide Entscheidungen wie empfohlen: 2D bekommt dieselben Texte und Korrekturen; Begriffe wie bei LEIFI (Abbildungsmaßstab, Linsengleichung).
+
+Zusätzlich (Wunsch „mehr Details, schicke Hintergründe“):
+- Abgedunkelter Physikraum hinter allen Labor-Szenen: Tafel mit Kreide-Skizzen (Lochkamera, Linse, Formeln), Poster „Das Licht“ mit Spektrum, Uhr, Fenster mit geschlossenen Jalousien und Lichtschlitzen, Glasschrank, Deckenleuchten, leichter Nebel nach hinten.
+- Experimentiertisch mit Kantenleiste, Gestell und Schubladenschrank.
+- Landschaft der Übersicht: Teich mit Schilf, Rauch aus dem Schornstein, kreisende Vögel, ziehende Wolken.
+
+Hinweise zur Umsetzung:
+- Station 6: Die alte Antwort aus „Aufgabe 2/3“ (gemeinsamer Speicher „a2“) bleibt bei Aufgabe 2. Aufgabe 3 hat ein neues, leeres Feld.
+- Der Abschluss-Text aus Station 5 wird beim ersten Öffnen von Station 6 automatisch übernommen.
+- Die Helligkeit der Schirmbilder ist jetzt in Station 0, 1 und 2 gleich geeicht. Kleine Löcher ergeben deshalb wirklich dunkle Bilder.
+- Die Lupe in Station 6 (Linse verschieben) und die Draufsicht ohne Perspektive sind neu; Drehen ist in der Draufsicht gesperrt, „↺ Start“ hebt das auf.
+
+
 ---
 
 ## A. Echte Fehler

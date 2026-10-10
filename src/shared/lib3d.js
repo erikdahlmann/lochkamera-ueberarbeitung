@@ -496,7 +496,7 @@ var SCR_FS='uniform sampler2D tSrc;uniform float R;uniform vec2 res;uniform floa
  'vec2 q=vUv-0.5;float vig=1.0-0.35*dot(q,q);vec3 c=aces(s*gain*vig);float l=dot(c,vec3(0.2126,0.7152,0.0722));c=max(mix(vec3(l),c,1.06),0.0);c=pow(c,vec3(1.0/2.2));\n'+
  'float n=fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453);c+=(n-0.5)*0.012;gl_FragColor=vec4(c,1.0);}';
 /* o: W,H (Pixel), sw, sh (Schirmgröße in mm) */
-function ScreenCam(canvas,o){this.o=o;this.ok=webglOK();if(!this.ok)return;
+function ScreenCam(canvas,o){this.o=o;this.canvas=canvas;this.ok=webglOK();if(!this.ok)return;
   var r=this.renderer=new T3.WebGLRenderer({canvas:canvas,antialias:false,preserveDrawingBuffer:true,alpha:false});
   r.setPixelRatio(1);r.setSize(o.W,o.H,false);r.outputColorSpace=T3.LinearSRGBColorSpace;r.toneMapping=T3.NoToneMapping;r.shadowMap.enabled=true;r.shadowMap.type=T3.PCFSoftShadowMap;
   var half=r.extensions.has('EXT_color_buffer_float')||r.extensions.has('EXT_color_buffer_half_float');
@@ -508,7 +508,11 @@ function ScreenCam(canvas,o){this.o=o;this.ok=webglOK();if(!this.ok)return;
 }
 /* b: Abstand Loch–Schirm (mm), Rmm: Radius des Lichtflecks (mm), gain: Helligkeit; p: {pos, look, near, far, layers} */
 ScreenCam.prototype.render=function(scene,b,Rmm,gain,p){if(!this.ok)return;p=p||{};var c=this.cam,o=this.o,r=this.renderer;
-  c.fov=Math.min(2*Math.atan(o.sh/2/b)/DEG3,150);c.aspect=o.sw/o.sh;c.near=p.near||0.5;c.far=p.far||8000;
+  var fov=2*Math.atan(o.sh/2/b)/DEG3,Rpx=Rmm*o.H/o.sh;c.fov=Math.min(fov,150);
+  /* Grenzen der Darstellung sichtbar machen statt still abzuschneiden */
+  var lim=fov>150||Rpx>140,box=this.canvas.parentNode;if(box){var tg=box.querySelector('.limtag');
+    if(lim&&!tg){tg=document.createElement('span');tg.className='tag limtag';tg.style.cssText='left:auto;right:8px;background:rgba(201,42,42,.8)';box.appendChild(tg);}
+    if(tg){tg.style.display=lim?'':'none';tg.textContent=fov>150?'Bildwinkel zu groß – nur ein Ausschnitt':'Fleck sehr groß – vereinfacht dargestellt';}}c.aspect=o.sw/o.sh;c.near=p.near||0.5;c.far=p.far||8000;
   c.position.copy(p.pos||V3(0,0,0));c.up.set(0,1,0);c.lookAt(p.look||V3(-1,0,0).add(c.position));c.layers.set(p.layers||0);c.updateProjectionMatrix();
   r.setRenderTarget(this.rt);r.setClearColor(p.bg==null?0x000000:p.bg,1);r.clear();r.render(scene,c);r.setRenderTarget(null);
   this.mat.uniforms.R.value=Math.min(Rmm*o.H/o.sh,140);this.mat.uniforms.gain.value=gain;r.render(this.qs,this.qc);
