@@ -109,8 +109,8 @@ function View3D(host,o){
   this.note=function(txt,ms){note.textContent=txt;note.classList.add('show');clearTimeout(noteT);noteT=setTimeout(function(){note.classList.remove('show');},ms||1600);};
   var rail=document.createElement('div');rail.className='v3d-rail';rail.title='Hier mit dem Finger scrollen';wrap.appendChild(rail);
   var sc=this.scene=new T3.Scene();
-  var persp=this.persp=new T3.PerspectiveCamera(o.fov||32,1.6,o.near||1,o.far||20000);persp.layers.enable(1);
-  var ortho=this.ortho=new T3.OrthographicCamera(-1,1,1,-1,o.near||1,o.far||20000);ortho.layers.enable(1);
+  var persp=this.persp=new T3.PerspectiveCamera(o.fov||32,1.6,o.near||1,o.far||20000);persp.layers.enable(1);persp.layers.enable(2);
+  var ortho=this.ortho=new T3.OrthographicCamera(-1,1,1,-1,o.near||1,o.far||20000);ortho.layers.enable(1);ortho.layers.enable(2);
   this.camera=persp;
   if(o.env!==false){var pm=new T3.PMREMGenerator(r);sc.environment=pm.fromScene(new T3.RoomEnvironment(),0.04).texture;sc.environmentIntensity=o.envI==null?0.5:o.envI;pm.dispose();}
 
@@ -326,6 +326,8 @@ function makeLabRoom(scene,o){
   var glassD=new T3.Mesh(new T3.PlaneGeometry(cabW-40,2000),glassMat(0xe7f5ff,0.12));glassD.position.set(-252,1150,0);glassD.rotation.y=-Math.PI/2;cab.add(glassD);
   /* Nebel: Raum verschwimmt nach hinten */
   var R2=Math.max(W,D);scene.fog=new T3.Fog(0x161a22,R2*0.45,R2*1.25);
+  /* eigene Ebene: Das Schirmbild (Station 6) zeigt den Raum nicht */
+  G.traverse(function(o){o.layers.set(2);});
   return G;}
 
 

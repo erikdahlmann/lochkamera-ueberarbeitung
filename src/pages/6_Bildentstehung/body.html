@@ -8,42 +8,41 @@
 <span class="step">Schritt 1</span>
 <h2>Zurück ins Linsen-Labor: Die Kerze kommt näher</h2>
 <!--@3d-->
-<p>Ihr kennt das Linsen-Labor aus Station 2. Jetzt steht alles <b>maßstäblich</b> auf einer optischen Bank, und ihr könnt den Gegenstand – eine Kerze – verschieben. <b>Ziehe die Kerze oder den Schirm</b> mit dem Finger oder benutze die Regler. Neben den Gegenständen ziehen dreht die Ansicht.</p>
+<p>Ihr kennt das Linsen-Labor aus Station 2. Jetzt steht alles <b>maßstäblich</b> auf einer optischen Bank, und ihr könnt den Gegenstand – eine Kerze – verschieben. <b>Ziehe die Kerze, die Linse oder den Schirm</b> mit dem Finger oder benutze die Regler. Neben den Gegenständen ziehen dreht die Ansicht.</p>
 <!--@2d-->
-<p>Ihr kennt das Linsen-Labor aus Station 2. Jetzt ist alles <b>maßstäblich</b> gezeichnet, und ihr könnt den Gegenstand – eine Kerze – verschieben. <b>Ziehe die Kerze oder den Schirm</b> mit dem Finger oder benutze die Regler.</p>
+<p>Ihr kennt das Linsen-Labor aus Station 2. Jetzt ist alles <b>maßstäblich</b> gezeichnet, und ihr könnt den Gegenstand – eine Kerze – verschieben. <b>Ziehe die Kerze, die Linse oder den Schirm</b> mit dem Finger oder benutze die Regler.</p>
 <!--@end-->
 <div class="ctls"><div><b>Linse</b><div id="segLens"></div></div><div><b>Ansicht</b><div id="segView"></div></div></div>
 <!--@3d-->
 <div id="v6"></div>
-<p class="cap">3D-Modell, alles maßstäblich. Farbige Strahlen: Licht von der Flammenspitze (orange), der Mitte (gelb) und dem Fuß der Kerze (blau). Gestrichelt: so liefen die Strahlen hinter dem Schirm weiter. Auf dem Schirm siehst du das echte Bild – schau auch von hinten!</p>
+<p class="cap">3D-Modell, alles maßstäblich. Die Kerze steht mittig auf der Achse. Farbige Strahlen: Licht von der Flammenspitze (orange), der Mitte (gelb) und dem Fuß der Kerze (blau). Gestrichelt: so liefen die Strahlen hinter dem Schirm weiter. Auf dem Schirm siehst du das Bild – schau auch von hinten!</p>
 <!--@2d-->
 <canvas id="side" class="drag"></canvas>
-<p class="cap">Seitenansicht: Abstände maßstäblich, Höhen vergrößert gezeichnet. Farbige Strahlen: Licht von der Flammenspitze (orange), der Mitte (gelb) und dem Fuß der Kerze (blau). Gestrichelt: so liefen die Strahlen hinter dem Schirm weiter.</p>
+<p class="cap">Seitenansicht: Abstände maßstäblich, Höhen vergrößert gezeichnet. Die Kerze steht mittig auf der Achse. Farbige Strahlen: Licht von der Flammenspitze (orange), der Mitte (gelb) und dem Fuß der Kerze (blau). Gestrichelt: so liefen die Strahlen hinter dem Schirm weiter.</p>
 <!--@end-->
+<div id="ctl6">
 <div class="grid2 even">
-<!--@3d-->
-  <div class="screen screenbox"><canvas id="scr"></canvas><span class="tag">Schirm von hinten gesehen</span><p class="cap">Bild auf dem Schirm (15 cm × 11 cm), echte Größe im Verhältnis.</p></div>
-<!--@2d-->
-  <div class="screen"><canvas id="scr"></canvas><p class="cap">Bild auf dem Schirm (15 cm × 11 cm), echte Größe im Verhältnis.</p></div>
-<!--@end-->
+  <div class="screen screenbox"><canvas id="scr"></canvas><span class="tag">Schirm von hinten gesehen</span><p class="cap">Bild auf dem Schirm (15 cm × 11 cm), echte Größe. Mit dem Maßstab am Rand lest ihr die Bildgröße ab.</p></div>
   <div>
     <div class="meters" style="grid-template-columns:1fr 1fr;margin-top:0">
       <div class="meter"><div class="lbl">Lichtfleck eines Punktes</div><div class="val" id="mD">–</div></div>
-      <div class="meter"><div class="lbl">Bildgröße B</div><div class="val" id="mB">–</div></div>
+      <div class="meter"><div class="lbl">Bild scharf?</div><div class="val" id="mS">–</div></div>
     </div>
-    <p id="sharpMsg" style="font-weight:800;font-size:20px;margin:12px 0"></p>
+    <p id="sharpMsg" style="font-weight:800;font-size:19px;margin:12px 0"></p>
+    <p id="caseMsg" class="hint" style="display:none"></p>
   </div>
 </div>
 <div class="ctls"><div id="sG"></div><div id="sB"></div><div id="sD"></div><div id="sH"></div></div>
 <div><b>Hilfen einblenden</b><div class="seg" id="helpBtns">
-<button data-k="focus">○ Scharfen Bildpunkt</button>
-<button data-k="fpts">○ Brennpunkte F</button>
-<button data-k="special">○ Besondere Strahlen</button>
-<button data-k="construct">○ Bild einzeichnen</button></div></div>
-<p><button class="primary take">📥 Messwert übernehmen</button> <span class="small takeMsg">(für Schritt 3 – nur wenn das Bild scharf ist)</span></p>
+<button data-k="focus"></button>
+<button data-k="fpts"></button>
+<button data-k="special"></button>
+<button data-k="construct"></button></div></div>
+<p><button class="primary" id="approach">▶ Kerze fährt heran</button> <button class="primary take">📥 Messwert übernehmen</button> <span class="small takeMsg">(für Schritt 3 – nur wenn das Bild scharf ist)</span></p>
+</div>
 
 <div class="box task" data-q="Kerze kommt näher"><b>Aufgabe 1 – Die Kerze kommt näher</b>
-<p>Nehmt Linse B (f = 100 mm). Stellt die Kerze auf die Abstände in der Tabelle und verschiebt jedes Mal den Schirm, bis das Bild scharf ist.</p>
+<p>Nehmt Linse B (f = 100 mm). Stellt die Kerze auf die Abstände in der Tabelle und verschiebt jedes Mal den Schirm, bis das Bild scharf ist. Oder schaut euch erst einmal an, was passiert, wenn ihr auf <b>▶ Kerze fährt heran</b> tippt.</p>
 <div class="tablewrap"><table class="t">
 <tr><th>Abstand Kerze – Linse g</th><th>Abstand Linse – Schirm b (scharf)</th><th>Bild größer oder kleiner als die Kerze?</th></tr>
 <tr><td>600 mm</td><td><input data-save="k1b" inputmode="decimal"></td><td><input data-save="k1g"></td></tr>
@@ -70,6 +69,8 @@
 <li><span class="chip" style="background:#2f9e44">Mittelpunktstrahl</span> geht durch die Mitte der Linse und wird nicht abgelenkt.</li>
 <li><span class="chip" style="background:#9c36b5">Brennpunktstrahl</span> geht vor der Linse durch den Brennpunkt F und läuft danach parallel zur Achse.</li>
 </ul>
+<p class="small"><b>Gestrichelte Linien</b> sind Hilfslinien: gedachte Verlängerungen, kein echtes Licht.</p>
+<p class="small"><b>Zerstreuungslinse (E, F):</b> Der Parallelstrahl läuft danach so weiter, als käme er vom Brennpunkt F vor der Linse. Der Brennpunktstrahl zielt auf den Brennpunkt F′ hinter der Linse und läuft danach parallel. Die Strahlen treffen sich nicht – nur ihre Verlängerungen nach hinten. Dort liegt ein virtuelles Bild.</p>
 <!--@3d-->
 <p class="small">Für die Zeichnung denkt man sich die Linse als senkrechte Ebene (gestrichelt), an der die Strahlen abknicken – auch dort, wo die echte Linse schon zu Ende ist. Die besonderen Strahlen liegen in der Ebene durch die Achse und die Flammenspitze.</p></div></details>
 <!--@2d-->
@@ -93,7 +94,7 @@
 <li>Gegenstand weit weg (weiter als 2F): Bild <b>verkleinert, umgekehrt</b>, zwischen F′ und 2F′. → <b>Kamera, Auge, Lochkamera mit Linse</b></li>
 <li>Gegenstand bei 2F: Bild <b>gleich groß</b>, umgekehrt, bei 2F′.</li>
 <li>Gegenstand zwischen 2F und F: Bild <b>vergrößert, umgekehrt</b>, weiter weg als 2F′. → <b>Beamer, Projektor</b></li>
-<li>Gegenstand bei F: Die Strahlen laufen parallel – <b>kein Bild</b>.</li>
+<li>Gegenstand bei F: Die Strahlen eines Punktes laufen hinter der Linse parallel. Sie treffen sich nirgends – <b>kein Bild auf dem Schirm</b>, egal wo er steht.</li>
 <li>Gegenstand näher als F: Kein Bild auf dem Schirm. Schaut man durch die Linse, sieht man ein <b>vergrößertes, aufrechtes</b> Bild. → <b>Lupe</b> (man nennt es <b>virtuelles</b> Bild)</li>
 </ul></div></details>
 </section>
@@ -101,21 +102,21 @@
 <section class="card">
 <span class="step">Schritt 3</span>
 <h2>Messen: Gibt es eine Gleichung?</h2>
-<p>Stellt im Linsen-Labor (Schritt 1) die Kerze irgendwohin, stellt das Bild <b>scharf</b> und tippt auf <b>Messwert übernehmen</b>. Die Simulation schreibt <i>f</i>, <i>g</i>, <i>b</i>, die Kerzengröße <i>G</i> und die Bildgröße <i>B</i> in die Tabelle. Die grauen Spalten rechnet ihr selbst aus (Taschenrechner!).</p>
+<p>Stellt im Linsen-Labor (Schritt 1) die Kerze irgendwohin, stellt das Bild <b>scharf</b> und tippt auf <b>Messwert übernehmen</b>. Die Simulation schreibt <i>f</i>, <i>g</i>, <i>b</i> und die Kerzengröße <i>G</i> in die Tabelle. Die <b>Bildgröße B</b> lest ihr selbst am Maßstab des Schirmbilds ab (vom Fuß bis zur Flammenspitze). Die grauen Spalten rechnet ihr aus (Taschenrechner!).</p>
 <p><button id="goLab2">↑ Zum Linsen-Labor</button> <button class="primary take">📥 Messwert übernehmen</button> <button id="clear">Tabelle leeren</button></p>
 <div class="tablewrap" data-q="Messtabelle Simulation"><table class="t" id="mt">
-<thead><tr><th>f</th><th>g</th><th>b</th><th>G</th><th>B</th><th style="background:#e9ecef">B : G</th><th style="background:#e9ecef">b : g</th><th style="background:#e9ecef">1/g + 1/b</th><th style="background:#e9ecef">1/f</th><th></th></tr></thead>
+<thead><tr><th>f</th><th>g</th><th>b</th><th>G</th><th>B (abgelesen)</th><th style="background:#e9ecef">B : G</th><th style="background:#e9ecef">b : g</th><th style="background:#e9ecef">1/g + 1/b</th><th style="background:#e9ecef">1/f</th><th></th></tr></thead>
 <tbody></tbody></table></div>
-<p class="small">Längen in mm. Für 1/g, 1/b und 1/f: mindestens 4 Stellen nach dem Komma (z. B. 1/150 = 0,0067).</p>
+<p class="small">Längen in mm. B : G und b : g haben keine Einheit. 1/g, 1/b und 1/f haben die Einheit 1/mm: mindestens 4 Stellen nach dem Komma (z. B. 1/150 = 0,0067).</p>
 <p><button id="checkT">✓ Rechnungen prüfen</button> <span id="checkMsg" class="small"></span></p>
 
-<div class="box task" data-q="Abbildungsgleichung"><b>Aufgabe 3 – Die Abbildungsgleichung</b>
+<div class="box task" data-q="Abbildungsmaßstab"><b>Aufgabe 3 – Der Abbildungsmaßstab</b>
 <ol>
 <li>Nehmt mindestens 5 Messwerte mit verschiedenen Kerzen-Abständen auf – auch mit anderen Linsen.</li>
 <li>Vergleicht die Spalten <b>B : G</b> und <b>b : g</b>. Was fällt euch auf?</li>
 <li>Formuliert eine Gleichung.</li>
 </ol>
-<textarea data-save="a2" placeholder="Uns fällt auf … Die Gleichung lautet …"></textarea></div>
+<textarea data-save="abb" placeholder="Uns fällt auf … Die Gleichung lautet …"></textarea></div>
 
 <div class="box task" data-q="Linsengleichung"><b>Aufgabe 4 – Die Linsengleichung</b>
 <ol>
@@ -126,11 +127,12 @@
 
 <h3>Diagramm: Bildweite b über Gegenstandsweite g</h3>
 <canvas id="chart"></canvas>
-<div class="seg"><button id="curveBtn">○ Kurven nach der Linsengleichung zeigen</button></div>
+<div class="seg"><button id="curveBtn"></button></div>
 
 <details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
-<p><b>Abbildungsgleichung:</b> &nbsp; B : G = b : g &nbsp; (Das Bild ist so oft größer als der Gegenstand, wie die Bildweite größer ist als die Gegenstandsweite.)</p>
-<p><b>Linsengleichung:</b> &nbsp; 1/f = 1/g + 1/b</p>
+<p><b>Abbildungsmaßstab:</b> &nbsp; B : G = b : g &nbsp; (Das Bild ist so oft größer als der Gegenstand, wie die Bildweite größer ist als die Gegenstandsweite.)</p>
+<p><b>Linsengleichung</b> (auch Abbildungsgleichung): &nbsp; 1/f = 1/g + 1/b</p>
+<p class="small">Beide Gleichungen gelten hier für Sammellinsen mit Bild auf dem Schirm (g größer als f). Gerechnet wird mit den Längen ohne Vorzeichen.</p>
 <p>Ist der Gegenstand sehr weit weg, wird 1/g fast 0. Dann ist b ≈ f – genau das habt ihr in Station 2 an der Lochkamera gesehen!</p>
 </div></details>
 </section>
@@ -138,7 +140,7 @@
 <section class="card" data-q="Rechenaufgaben">
 <span class="step">Schritt 4</span>
 <h2>Rechnen statt Probieren: eure Lochkamera</h2>
-<p>Mit den beiden Gleichungen könnt ihr vorhersagen, wo der Schirm stehen muss. Rechnet und prüft dann mit der Simulation oben.</p>
+<p>Mit den beiden Gleichungen könnt ihr vorhersagen, wo der Schirm stehen muss. Rechnet und prüft dann mit der Simulation oben (Aufgaben 5, 6, 7 und 9; für Aufgabe 8 ist die Bank zu kurz – dort hilft nur Rechnen).</p>
 <div id="quiz"></div>
 </section>
 
@@ -147,6 +149,7 @@
 <h2>Experiment: Gilt die Linsengleichung wirklich?</h2>
 <div class="box safety"><b>Sicherheit</b> Brennende Kerze nur auf feuerfester Unterlage, Haare zurückbinden, nichts über die Flamme halten. Besser: eine LED-Lampe mit Pfeil-Blende als Gegenstand.</div>
 <p><b>Material:</b> optische Bank oder Maßband auf dem Tisch, Kerze oder Lampe als Gegenstand, Linsen B und C, Schirm, Lineal.</p>
+<p class="small">So messt ihr genau: <i>G</i> und <i>B</i> immer zwischen denselben Stellen messen (Fuß bis Flammenspitze bzw. Pfeilfuß bis Pfeilspitze). <i>g</i> und <i>b</i> ab der Mitte der Linse messen. Jeden Wert zweimal messen.</p>
 <div class="box task"><b>Durchführung</b>
 <ol>
 <li>Messt die Höhe <i>G</i> des Gegenstands (Flamme oder Pfeil).</li>
@@ -161,11 +164,24 @@
 <p><button id="calcEx">🧮 Quotienten ausrechnen lassen</button> <span class="small">(erst, wenn ihr es selbst versucht habt)</span></p>
 <div class="box task"><b>Auswertung</b>
 <ol>
-<li>Stimmen B : G und b : g ungefähr überein?</li>
+<li>Stimmen B : G und b : g ungefähr überein? Wie stark weichen sie voneinander ab (in Prozent)?</li>
 <li>Stimmt 1/g + 1/b ungefähr mit 1/f überein? Wie groß sind die Abweichungen und woher kommen sie?</li>
 <li>Was habt ihr beobachtet, als die Linse näher als f am Gegenstand stand?</li>
 </ol>
 <textarea data-save="exA" placeholder="Auswertung …"></textarea></div>
+</section>
+
+<section class="card" data-q="Abschluss: Unsere beste Kamera">
+<span class="step">Abschluss</span>
+<h2>Unsere optimierte Kamera – und warum sie funktioniert</h2>
+<div class="box task"><b>Erklärt in eigenen Worten</b> (z. B. für einen Kurzvortrag oder eine Erklärseite)
+<ol>
+<li>Warum ist das Bild einer Lochkamera mit großem Loch unscharf?</li>
+<li>Wie sorgt eine Sammellinse dafür, dass das Bild hell <b>und</b> scharf wird?</li>
+<li>Was hat das mit Brechung zu tun?</li>
+<li>Welche Linse und welchen Abstand habt ihr für eure Kamera gewählt? Begründet mit der Linsengleichung.</li>
+</ol>
+<textarea data-save="fin" data-save-old="lk4:fin" style="min-height:140px" placeholder="Unsere Erklärung …"></textarea></div>
 <p><button id="copy">📋 Ergebnisse kopieren</button></p>
 </section>
 </main>
