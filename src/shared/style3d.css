@@ -1,0 +1,24 @@
+
+/* ---------- 3D-Ansichten ---------- */
+.v3d{position:relative;margin:6px 0 2px}
+.v3d-wrap{position:relative;border-radius:14px;overflow:hidden;background:#0d1016;background:radial-gradient(ellipse at 50% 30%,#2b3346 0%,#161b26 55%,#0a0c11 100%);touch-action:none;-webkit-user-select:none;user-select:none}
+.v3d-wrap.light{background:radial-gradient(ellipse at 50% 30%,#3a4458 0%,#1d2330 60%,#10131a 100%)}
+.v3d-wrap canvas{display:block;border-radius:0;background:transparent;width:100%}
+.v3d-labels{position:absolute;left:0;top:0;pointer-events:none}
+.l3d{font:600 13px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#fff;background:rgba(12,15,22,.72);padding:2px 7px;border-radius:7px;white-space:nowrap;pointer-events:none}
+.l3d.plain{background:none;text-shadow:0 1px 3px #000,0 0 6px #000}
+.l3d.big{font-size:16px;font-weight:800}
+.l3d.warn{background:rgba(201,42,42,.85);font-size:15px}
+.l3d.dim{opacity:.85;font-weight:500}
+.v3d-bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.v3d-bar button{min-height:40px;font-size:14px;padding:4px 11px;border-radius:10px}
+.v3d-hint{font-size:13px;color:var(--muted);margin-left:auto}
+.v3d-err{color:#fff;padding:30px 20px;text-align:center}
+.v3d-full{position:fixed;left:0;top:0;right:0;bottom:0;z-index:1000;background:#0b0d12;margin:0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:flex;flex-direction:column}
+.v3d-full .v3d-wrap{flex:1}
+.v3d-full .v3d-hint{color:#aab3c5}
+body.v3d-lock{overflow:hidden}
+.screen canvas{background:#000}
+.screenbox{position:relative}
+.screenbox .tag{position:absolute;left:8px;top:8px;font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:1px 7px;border-radius:6px;pointer-events:none}
+.grid2 .ctls{grid-template-columns:1fr}

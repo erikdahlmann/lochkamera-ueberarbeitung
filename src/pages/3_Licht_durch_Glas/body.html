@@ -1,0 +1,71 @@
+</head><body>
+<div id="nojs" class="nojs">Wenn du diesen roten Hinweis siehst, laufen die Animationen nicht. Öffne die Datei bitte in Safari und nicht nur in der Vorschau. Frag sonst deine Lehrkraft.</div>
+<header><div class="in"><div class="kicker">Lochkamera · Station 3 von 6</div><h1>Licht durch Glas: Was passiert mit dem Strahl?</h1>
+<p>Eine Linse lenkt Licht um – dabei ist sie nur ein Stück Glas. Schaut euch zuerst genau an, was mit Licht passiert, das durch Glas geht.</p></div></header>
+<main>
+
+<section class="card">
+<span class="step">Schritt 1</span>
+<h2>Schau genau hin: Licht durch Glas</h2>
+<!--@3d-->
+<p>Ein Lichtstrahl trifft auf einen Glaskörper, der auf dem Tisch liegt. <b>Ziehe die Lampe</b> (gelb) an eine andere Stelle und <b>drehe sie am weißen Ring</b>, um die Richtung des Strahls zu ändern. Probiere verschiedene Glaskörper aus und drehe sie. Wenn du neben Lampe und Ring auf das Bild tippst und ziehst, drehst du die ganze Ansicht.</p>
+<!--@2d-->
+<p>Ein Laserstrahl trifft auf einen Glaskörper. <b>Ziehe die Lampe</b> (gelb) an eine andere Stelle und <b>drehe sie am weißen Ring</b>, um die Richtung des Strahls zu ändern. Probiere verschiedene Glaskörper aus und drehe sie.</p>
+<!--@end-->
+<div><b>Glaskörper</b><div id="segE"></div></div>
+<!--@3d-->
+<div id="vE"></div>
+<!--@2d-->
+<canvas id="cvE" class="drag"></canvas>
+<!--@end-->
+<div class="ctls"><div id="sRot"></div><div><b>Licht</b><div id="segEB"></div></div></div>
+<div id="lotCtl" style="display:none"><div class="seg"><button id="btnLot">○ Lot einzeichnen</button><button id="btnWin">○ Winkel einzeichnen</button></div><div id="angList"></div></div>
+
+<div class="box task" data-q="Beobachtungen Strahlengang"><b>Aufgabe 1 – Beobachte und beschreibe</b>
+<ol>
+<li>An welchen Stellen ändert der Lichtstrahl seine Richtung? Und wo läuft er geradeaus?</li>
+<li>Findest du eine Stellung, bei der der Strahl beim Eintreten <b>gar nicht</b> abknickt? Wie trifft er dann auf die Oberfläche?</li>
+<li>Wann knickt der Strahl stark ab, wann nur wenig?</li>
+<li>Knickt der Strahl beim Hineingehen und beim Herausgehen in die gleiche Richtung?</li>
+</ol>
+<textarea data-save="e1" placeholder="Wir beobachten …"></textarea>
+</div>
+</section>
+
+<section class="card">
+<span class="step">Schritt 2</span>
+<h2>Wie kann man die Veränderung beschreiben?</h2>
+<p>Ihr habt gesehen: Der Strahl knickt an der Oberfläche ab, mal stark, mal schwach, mal gar nicht. Um das genau zu untersuchen, müssen wir es <b>messen</b> können.</p>
+<div class="box task" data-q="Welche Größen"><b>Aufgabe 2 – Überlegt gemeinsam</b>
+<ol>
+<li>Mit welcher Größe kann man die <b>Richtung</b> eines Lichtstrahls angeben?</li>
+<li>Eine Richtung misst man immer gegenüber einer Bezugslinie. Welche Linie eignet sich als Bezug – auch bei einer runden Glaskugel?</li>
+</ol>
+<textarea data-save="e2" placeholder="Unsere Idee …"></textarea>
+</div>
+<details><summary>Hinweis 1</summary><div><p>Der Knick passiert nur an <b>einem Punkt</b>: dort, wo der Strahl auf die Oberfläche trifft. Wir schauen also nur auf diesen <b>Auftreffpunkt</b>.</p></div></details>
+<details><summary>Hinweis 2</summary><div><p>Eine Richtung gibt man mit einem <b>Winkel</b> an. Die Oberfläche selbst ist als Bezug ungünstig, denn bei der Kugel oder der Linse ist sie gekrümmt.</p></div></details>
+<details><summary>Hinweis 3</summary><div><p>Erinnert euch: Wann knickte der Strahl nicht ab? Genau dann, wenn er <b>senkrecht</b> auf die Oberfläche traf. Diese Senkrechte ist eine gute Bezugslinie!</p>
+<p>Tippe auf den Knopf unten. Danach könnt ihr im Bild oben das Lot einzeichnen lassen.</p></div></details>
+<p><button class="primary" id="unlock">↑ Lot und Winkel im Bild oben freischalten</button></p>
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<ul>
+<li>Das <b>Lot</b> ist die Linie, die am Auftreffpunkt <b>senkrecht</b> auf der Oberfläche steht.</li>
+<li>Der <b>Einfallswinkel α</b> liegt zwischen dem ankommenden Strahl und dem Lot.</li>
+<li>Der <b>Brechungswinkel β</b> liegt zwischen dem weiterlaufenden Strahl und dem Lot.</li>
+<li>Trifft der Strahl entlang des Lots auf (α = 0°), knickt er nicht ab.</li>
+</ul></div></details>
+<div class="box task" data-q="Lot und Winkel"><b>Aufgabe 3 – Mit Lot und Winkeln beschreiben</b>
+<ol>
+<li>Schalte Lot und Winkel ein. Ist beim Hineingehen in das Glas β größer oder kleiner als α? Und beim Herausgehen?</li>
+<li>Formuliert eine Je-desto-Vermutung: Je größer α, desto …</li>
+</ol>
+<textarea data-save="e3" placeholder="Unsere Vermutung …"></textarea>
+</div>
+<div class="box idea"><b>Weiter:</b> In <b>Station 4</b> prüft ihr eure Vermutung genau – mit einer Winkelscheibe.</div>
+<p><button id="copy">📋 Ergebnisse kopieren</button></p>
+</section>
+
+</main>
+<footer>Station 3 · Lochkamera-Projekt Klasse 8 · Weiter mit der Datei „4_Brechung.html“</footer>
+

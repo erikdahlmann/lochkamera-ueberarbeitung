@@ -1,0 +1,120 @@
+</head><body>
+<div id="nojs" class="nojs">Wenn du diesen roten Hinweis siehst, laufen die Animationen nicht. Öffne die Datei bitte in Safari und nicht nur in der Vorschau. Frag sonst deine Lehrkraft.</div>
+<header><div class="in"><div class="kicker">Lochkamera · Station 4 von 6</div><h1>Wie funktioniert eine Linse?</h1>
+<p>In Station 3 habt ihr Lot, Einfallswinkel und Brechungswinkel kennengelernt. Jetzt messt ihr genau und versteht dann, wie eine Linse funktioniert.</p></div></header>
+<main>
+
+<section class="card">
+<span class="step">Schritt 1</span>
+<h2>Genau messen: Wie hängt β von α ab?</h2>
+<!--@3d-->
+<p>Jetzt prüft ihr eure Vermutung genau. Das Licht trifft in der Mitte einer <b>Winkelscheibe</b> auf die gerade Seite eines halbrunden Glaskörpers – genau wie später im Experiment. Ziehe die <b>Lampe</b> auf dem Kreis herum. Die gestrichelte Linie ist das Lot.</p>
+<!--@2d-->
+<p>Jetzt prüft ihr eure Vermutung genau. Das Licht trifft in der Mitte einer <b>Winkelscheibe</b> auf eine gerade Glasoberfläche – genau wie später im Experiment. Ziehe die <b>Lampe</b> auf dem Kreis herum. Die gestrichelte Linie ist das Lot.</p>
+<!--@end-->
+<div class="grid2">
+<!--@3d-->
+  <div><div id="vA"></div><p class="cap">Winkelscheibe in 3D mit halbrundem Körper aus dem Material. Ziehe die Lampe!</p></div>
+<!--@2d-->
+  <div><canvas id="cvA" class="drag"></canvas><p class="cap">Winkelscheibe: oben Luft, unten das Material. Ziehe die Lampe!</p></div>
+<!--@end-->
+  <div>
+    <div id="sAlpha"></div>
+    <b>Material</b><div id="segMat"></div>
+    <b>Licht kommt …</b><div id="segDir"></div>
+    <b>Anzeige</b><div class="seg"><button id="btnNum" class="on">Winkel anzeigen</button></div>
+    <div class="meters" style="grid-template-columns:1fr 1fr">
+      <div class="meter"><div class="lbl">Einfallswinkel α</div><div class="val" id="mA">–</div></div>
+      <div class="meter"><div class="lbl">Brechungswinkel β</div><div class="val" id="mB">–</div></div>
+    </div>
+  </div>
+</div>
+<div class="box task" data-q="Brechung Luft-Glas (Simulation)"><b>Aufgabe 1 – Messreihe in der Simulation</b> (Material: Glas, Licht kommt aus der Luft)
+<div class="tablewrap"><table class="t">
+<tr><th>Einfallswinkel α</th><th>0°</th><th>20°</th><th>40°</th><th>60°</th><th>80°</th></tr>
+<tr><td>Brechungswinkel β</td><td><input data-save="b0" inputmode="decimal"></td><td><input data-save="b20" inputmode="decimal"></td><td><input data-save="b40" inputmode="decimal"></td><td><input data-save="b60" inputmode="decimal"></td><td><input data-save="b80" inputmode="decimal"></td></tr>
+</table></div>
+<ol>
+<li>Was passiert, wenn das Licht genau senkrecht (α = 0°) auf das Glas trifft?</li>
+<li>Ist β größer oder kleiner als α? Wird das Licht zum Lot hin oder vom Lot weg geknickt?</li>
+<li>Vergleiche Wasser, Glas und Diamant.</li>
+<li>Stelle „aus dem Material“ ein. Was ist jetzt anders? Was passiert bei großen Winkeln?</li>
+</ol>
+<textarea data-save="a1" placeholder="Unsere Beobachtungen …"></textarea>
+</div>
+
+<details><summary>Für Neugierige: Warum knickt das Licht ab? Ein Modell</summary><div>
+<p>Im Glas ist Licht langsamer als in Luft. Stell dir eine Reihe Läufer vor, die nebeneinander schräg vom Asphalt auf eine Sandfläche laufen. Wer zuerst im Sand ist, wird zuerst langsamer – die Reihe dreht sich. So ändert sich die Laufrichtung.</p>
+<!--@3d-->
+<div id="vW"></div>
+<p class="cap">Die hellen Kämme sind Wellenberge des Lichts – hier als Wasserwellen-Modell in 3D. Sie stehen senkrecht zur Laufrichtung. Im Material sind sie langsamer und enger zusammen. Einfallswinkel und Material stellst du oben ein.</p>
+<!--@2d-->
+<canvas id="cvW"></canvas>
+<p class="cap">Die hellen Streifen sind Wellenberge des Lichts. Sie stehen senkrecht zur Laufrichtung. Im Material sind sie langsamer und enger zusammen. Einfallswinkel und Material stellst du oben ein.</p>
+<!--@end-->
+</div></details>
+
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<p>Licht ändert an der Grenze zwischen zwei Stoffen (z. B. Luft und Glas) seine Richtung. Das nennt man <b>Brechung</b>.</p>
+<ul>
+<li>Von Luft in Glas: Das Licht wird <b>zum Lot hin</b> gebrochen (β &lt; α).</li>
+<li>Von Glas in Luft: Das Licht wird <b>vom Lot weg</b> gebrochen. Bei großen Winkeln kommt gar kein Licht mehr heraus: <b>Totalreflexion</b>.</li>
+<li>Trifft das Licht <b>senkrecht</b> auf, wird es nicht abgelenkt.</li>
+</ul>
+</div></details>
+</section>
+
+<section class="card">
+<span class="step">Schritt 2</span>
+<h2>Licht durch Glaskörper</h2>
+<!--@3d-->
+<p>Jetzt geht das Licht durch einen ganzen Glaskörper: Es wird zweimal gebrochen – beim Hineingehen und beim Herausgehen. Ziehe die Lampe, um sie zu verschieben. Daneben ziehen dreht die Ansicht.</p>
+<!--@2d-->
+<p>Jetzt geht das Licht durch einen ganzen Glaskörper: Es wird zweimal gebrochen – beim Hineingehen und beim Herausgehen. Ziehe auf dem Bild nach oben oder unten, um die Lampe zu verschieben.</p>
+<!--@end-->
+<div><b>Glaskörper</b><div id="segShape"></div></div>
+<!--@3d-->
+<div id="vB"></div>
+<!--@2d-->
+<canvas id="cvB" class="drag"></canvas>
+<!--@end-->
+<p class="cap">Ein Kästchen im Raster = 1 cm (Modell). Die gestrichelte Linie ist die Mittelachse.</p>
+<div class="ctls">
+  <div><b>Lichtquelle</b><div id="segBeam"></div></div>
+  <div id="sAng"></div>
+  <div id="sN"></div>
+  <div id="sR"></div>
+</div>
+
+<div class="box task" data-q="Glaskörper"><b>Aufgabe 2 – Entdeckt, was Glaskörper mit Licht machen</b>
+<ol>
+<li><b>Glasquader:</b> Stelle das Licht schräg ein. Vergleiche die Richtung vor und hinter dem Quader.</li>
+<li><b>Prisma:</b> In welche Richtung wird das Licht abgelenkt – zur Spitze oder zur dicken Seite?</li>
+<li><b>Linse aus Prismen:</b> Hier liegen Prismen übereinander, oben und unten anders herum. Wohin lenken sie das Licht?</li>
+<li><b>Sammellinse:</b> Wo treffen sich die Strahlen? Verändere die Wölbung. Was passiert mit dem Treffpunkt (Brennpunkt)?</li>
+<li>Stelle die Brechzahl auf <b>n = 1,00</b> (Glas verhält sich wie Luft). Was macht die Linse jetzt?</li>
+<li><b>Zerstreuungslinse:</b> Erkläre, warum ihr mit E und F kein scharfes Bild bekommen habt.</li>
+</ol>
+<textarea data-save="a2" placeholder="Unsere Beobachtungen …"></textarea>
+</div>
+
+<div class="box task" data-q="Wölbung"><b>Aufgabe 3 – Zurück zu euren Linsen</b>
+<p>Linse A hat die Brennweite 40 mm, Linse D 500 mm. Welche ist stärker gewölbt? Begründet mit der Simulation. Prüft es dann, indem ihr die echten Linsen vorsichtig am Rand anfasst und vergleicht.</p>
+<textarea data-save="a3" placeholder="Linse … ist stärker gewölbt, weil …"></textarea>
+</div>
+
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<ul>
+<li>Ein <b>Prisma</b> lenkt Licht zu seiner dicken Seite hin ab.</li>
+<li>Eine <b>Sammellinse</b> ist in der Mitte dick und am Rand dünn – wie viele Prismen, deren dicke Seite zur Mitte zeigt. Darum werden alle Strahlen zur Mitte hin gelenkt und treffen sich im <b>Brennpunkt</b>.</li>
+<li>Je stärker die Linse gewölbt ist, desto stärker wird gebrochen und desto <b>kleiner ist die Brennweite</b>.</li>
+<li>Eine <b>Zerstreuungslinse</b> ist am Rand dick. Sie lenkt das Licht von der Mitte weg.</li>
+<li>Ohne Brechung (n = 1) hätte eine Linse keine Wirkung.</li>
+</ul>
+</div></details>
+<div class="box idea"><b>Und jetzt in echt!</b> Alles, was ihr hier simuliert habt, könnt ihr auch selbst messen. Weiter geht es mit <b>Station 5</b>.</div>
+<p><button id="copy">📋 Ergebnisse kopieren</button></p>
+</section>
+</main>
+<footer>Station 4 · Lochkamera-Projekt Klasse 8 · Weiter mit der Datei „5_Experimente.html“</footer>
+

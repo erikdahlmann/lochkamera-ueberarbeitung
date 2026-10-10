@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Station 3 – Licht durch Glas: Lot und Winkel</title>
+<style>:root{--bg:#f4f1ea;--card:#fff;--ink:#1d2230;--muted:#5d6577;--line:#e2dccf;--accent:#d9480f;--blue:#1971c2;--green:#2b8a3e;--orange:#e8590c;--violet:#7048e8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+header{background:#1d2230;color:#fff;padding:18px 16px 16px}
+header .in{max-width:1180px;margin:0 auto}
+header .kicker{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#ffc078;font-weight:700}
+header h1{margin:4px 0 4px;font-size:30px;line-height:1.2}
+header p{margin:0;color:#c9cfdb}
+main{max-width:1180px;margin:0 auto;padding:8px 16px 48px}
+h2{font-size:24px;margin:0 0 8px;line-height:1.25}
+h3{font-size:19px;margin:16px 0 6px}
+.card{background:var(--card);border-radius:18px;padding:18px 18px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.step{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;font-weight:700;font-size:15px;padding:2px 12px;margin-bottom:6px}
+.box{border-radius:14px;padding:12px 16px;margin:14px 0}
+.box>b:first-child{display:block;margin-bottom:2px}
+.task{background:#e7f1fc;border-left:6px solid var(--blue)}
+.try{background:#e6f6e9;border-left:6px solid var(--green)}
+.idea{background:#fff1e3;border-left:6px solid var(--orange)}
+.safety{background:#ffe9e9;border-left:6px solid #e03131}
+.task ol,.try ol,.idea ol,.task ul,.try ul{margin:6px 0 0;padding-left:22px}
+.task li,.try li{margin:4px 0}
+details{background:#f8f6f1;border-radius:14px;margin:12px 0;border:1px solid var(--line)}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;min-height:44px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▶";display:inline-block;margin-right:10px;font-size:13px;transition:transform .2s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>div{padding:0 16px 14px}
+.merke{background:#fff8db;border-color:#f5d76e}
+canvas{display:block;width:100%;border-radius:14px;background:#10131a;-webkit-user-select:none;user-select:none}
+.drag{touch-action:none}
+.screen canvas{image-rendering:auto}
+.cap{font-size:14px;color:var(--muted);margin:6px 2px 0}
+.grid2{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:860px){.grid2{grid-template-columns:3fr 2fr}.grid2.even{grid-template-columns:1fr 1fr}}
+.ctls{display:grid;grid-template-columns:1fr;gap:6px 22px;margin-top:12px}
+@media (min-width:700px){.ctls{grid-template-columns:1fr 1fr}}
+.ctl label{display:block;font-weight:600;font-size:16px;margin-bottom:-2px}
+.ctl .row{display:flex;align-items:center;gap:8px}
+.ctl output{min-width:92px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:44px;background:transparent;margin:0;min-width:60px}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:#d5d9e2}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;border-radius:50%;background:var(--accent);margin-top:-12px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:#d5d9e2}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--accent);border:3px solid #fff}
+button{font:inherit;font-size:16px;border:0;border-radius:12px;min-height:44px;min-width:44px;padding:8px 14px;background:#e3e7ef;color:var(--ink);cursor:pointer;touch-action:manipulation}
+button:active{transform:scale(.97)}
+button.primary{background:var(--accent);color:#fff;font-weight:700}
+button.pm{width:44px;padding:0;font-size:24px;font-weight:700;line-height:1}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.seg button{background:#e3e7ef}
+.seg button.on{background:#1d2230;color:#fff;font-weight:700}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.meter{background:#f3f4f7;border-radius:12px;padding:8px 12px}
+.meter .lbl{font-size:14px;color:var(--muted)}
+.meter .val{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.meter .bar{height:10px;border-radius:5px;background:#dde1e8;margin-top:4px;overflow:hidden}
+.meter .bar i{display:block;height:100%;width:0;border-radius:5px;background:var(--green);transition:width .15s}
+table.t{border-collapse:collapse;width:100%;margin:8px 0;font-size:16px}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:middle}
+table.t th{background:#f3f0e8}
+table.t input,table.t select{font:inherit;font-size:16px;width:100%;min-width:60px;border:1px solid #c9cdd6;border-radius:8px;padding:8px;background:#fff}
+textarea{font:inherit;font-size:16px;width:100%;min-height:76px;border:1px solid #c9cdd6;border-radius:10px;padding:10px;background:#fff}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ok{color:var(--green);font-weight:700}.no{color:#c92a2a;font-weight:700}
+.chip{display:inline-block;border-radius:8px;padding:0 8px;font-weight:700;color:#fff;font-size:15px}
+.nojs{background:#c92a2a;color:#fff;padding:12px 16px;font-weight:700;text-align:center}
+.next{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.small{font-size:15px;color:var(--muted)}
+footer{max-width:1180px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:14px}
+
+footer.legal{padding-top:0;font-size:13px}
+footer.legal details{background:transparent;margin:6px 0}
+footer.legal details>summary{font-weight:600;color:var(--muted)}
+footer.legal p{margin:0 0 10px;line-height:1.45}
+</style></head><body>
+<div id="nojs" class="nojs">Wenn du diesen roten Hinweis siehst, laufen die Animationen nicht. Öffne die Datei bitte in Safari und nicht nur in der Vorschau. Frag sonst deine Lehrkraft.</div>
+<header><div class="in"><div class="kicker">Lochkamera · Station 3 von 6</div><h1>Licht durch Glas: Was passiert mit dem Strahl?</h1>
+<p>Eine Linse lenkt Licht um – dabei ist sie nur ein Stück Glas. Schaut euch zuerst genau an, was mit Licht passiert, das durch Glas geht.</p></div></header>
+<main>
+
+<section class="card">
+<span class="step">Schritt 1</span>
+<h2>Schau genau hin: Licht durch Glas</h2>
+<p>Ein Laserstrahl trifft auf einen Glaskörper. <b>Ziehe die Lampe</b> (gelb) an eine andere Stelle und <b>drehe sie am weißen Ring</b>, um die Richtung des Strahls zu ändern. Probiere verschiedene Glaskörper aus und drehe sie.</p>
+<div><b>Glaskörper</b><div id="segE"></div></div>
+<canvas id="cvE" class="drag"></canvas>
+<div class="ctls"><div id="sRot"></div><div><b>Licht</b><div id="segEB"></div></div></div>
+<div id="lotCtl" style="display:none"><div class="seg"><button id="btnLot">○ Lot einzeichnen</button><button id="btnWin">○ Winkel einzeichnen</button></div><div id="angList"></div></div>
+
+<div class="box task" data-q="Beobachtungen Strahlengang"><b>Aufgabe 1 – Beobachte und beschreibe</b>
+<ol>
+<li>An welchen Stellen ändert der Lichtstrahl seine Richtung? Und wo läuft er geradeaus?</li>
+<li>Findest du eine Stellung, bei der der Strahl beim Eintreten <b>gar nicht</b> abknickt? Wie trifft er dann auf die Oberfläche?</li>
+<li>Wann knickt der Strahl stark ab, wann nur wenig?</li>
+<li>Knickt der Strahl beim Hineingehen und beim Herausgehen in die gleiche Richtung?</li>
+</ol>
+<textarea data-save="e1" placeholder="Wir beobachten …"></textarea>
+</div>
+</section>
+
+<section class="card">
+<span class="step">Schritt 2</span>
+<h2>Wie kann man die Veränderung beschreiben?</h2>
+<p>Ihr habt gesehen: Der Strahl knickt an der Oberfläche ab, mal stark, mal schwach, mal gar nicht. Um das genau zu untersuchen, müssen wir es <b>messen</b> können.</p>
+<div class="box task" data-q="Welche Größen"><b>Aufgabe 2 – Überlegt gemeinsam</b>
+<ol>
+<li>Mit welcher Größe kann man die <b>Richtung</b> eines Lichtstrahls angeben?</li>
+<li>Eine Richtung misst man immer gegenüber einer Bezugslinie. Welche Linie eignet sich als Bezug – auch bei einer runden Glaskugel?</li>
+</ol>
+<textarea data-save="e2" placeholder="Unsere Idee …"></textarea>
+</div>
+<details><summary>Hinweis 1</summary><div><p>Der Knick passiert nur an <b>einem Punkt</b>: dort, wo der Strahl auf die Oberfläche trifft. Wir schauen also nur auf diesen <b>Auftreffpunkt</b>.</p></div></details>
+<details><summary>Hinweis 2</summary><div><p>Eine Richtung gibt man mit einem <b>Winkel</b> an. Die Oberfläche selbst ist als Bezug ungünstig, denn bei der Kugel oder der Linse ist sie gekrümmt.</p></div></details>
+<details><summary>Hinweis 3</summary><div><p>Erinnert euch: Wann knickte der Strahl nicht ab? Genau dann, wenn er <b>senkrecht</b> auf die Oberfläche traf. Diese Senkrechte ist eine gute Bezugslinie!</p>
+<p>Tippe auf den Knopf unten. Danach könnt ihr im Bild oben das Lot einzeichnen lassen.</p></div></details>
+<p><button class="primary" id="unlock">↑ Lot und Winkel im Bild oben freischalten</button></p>
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<ul>
+<li>Das <b>Lot</b> ist die Linie, die am Auftreffpunkt <b>senkrecht</b> auf der Oberfläche steht.</li>
+<li>Der <b>Einfallswinkel α</b> liegt zwischen dem ankommenden Strahl und dem Lot.</li>
+<li>Der <b>Brechungswinkel β</b> liegt zwischen dem weiterlaufenden Strahl und dem Lot.</li>
+<li>Trifft der Strahl entlang des Lots auf (α = 0°), knickt er nicht ab.</li>
+</ul></div></details>
+<div class="box task" data-q="Lot und Winkel"><b>Aufgabe 3 – Mit Lot und Winkeln beschreiben</b>
+<ol>
+<li>Schalte Lot und Winkel ein. Ist beim Hineingehen in das Glas β größer oder kleiner als α? Und beim Herausgehen?</li>
+<li>Formuliert eine Je-desto-Vermutung: Je größer α, desto …</li>
+</ol>
+<textarea data-save="e3" placeholder="Unsere Vermutung …"></textarea>
+</div>
+<div class="box idea"><b>Weiter:</b> In <b>Station 4</b> prüft ihr eure Vermutung genau – mit einer Winkelscheibe.</div>
+<p><button id="copy">📋 Ergebnisse kopieren</button></p>
+</section>
+
+</main>
+<footer>Station 3 · Lochkamera-Projekt Klasse 8 · Weiter mit der Datei „4_Brechung.html“</footer>
+
+<script>
+"use strict";
+window.addEventListener('error',function(e){if(e&&e.message&&e.message.indexOf('ResizeObserver')>=0){e.preventDefault();e.stopImmediatePropagation();return false;}},true);
+(function(){var n=document.getElementById('nojs');if(n)n.style.display='none';})();
+
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+function clamp(x,a,b){return x<a?a:(x>b?b:x);}
+function fmt(x,dec){dec=dec||0;return Number(x).toLocaleString('de-DE',{minimumFractionDigits:dec,maximumFractionDigits:dec});}
+function fmtLen(mm){ // mm -> lesbarer Text
+  if(!isFinite(mm)) return '∞';
+  if(Math.abs(mm)>=1000) return fmt(mm/1000,2)+' m';
+  if(Math.abs(mm)>=100) return fmt(mm,0)+' mm';
+  if(Math.abs(mm)>=10) return fmt(mm,1)+' mm';
+  return fmt(mm,2)+' mm';
+}
+
+/* ---------- Canvas mit hoher Auflösung, passt sich der Breite an ---------- */
+function HiCanvas(canvas,aspect,draw){
+  var self=this;this.canvas=canvas;this.ctx=canvas.getContext('2d');this.aspect=aspect;this.draw=draw;this.w=0;this.h=0;this.dpr=1;
+  var pending=false;
+  this.request=function(){if(pending)return;pending=true;requestAnimationFrame(function(){pending=false;self.paint();});};
+  this.resize=function(){
+    var w=canvas.clientWidth||canvas.parentNode.clientWidth||600;
+    var h=Math.round(w/self.aspect);
+    canvas.style.height=h+'px';
+    self.dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(w*self.dpr);canvas.height=Math.round(h*self.dpr);
+    self.w=w;self.h=h;self.paint();
+  };
+  this.paint=function(){if(!self.w)return;self.ctx.setTransform(self.dpr,0,0,self.dpr,0,0);self.draw(self.ctx,self.w,self.h);};
+  // Neu zeichnen nur bei Fenster-/Drehänderung (kein ResizeObserver: führt in Safari zu Fehlermeldungen)
+  var lastW=0;function check(){var w=canvas.clientWidth;if(w&&Math.abs(w-lastW)>1){lastW=w;self.resize();}}
+  window.addEventListener('resize',function(){setTimeout(check,80);});
+  window.addEventListener('orientationchange',function(){setTimeout(check,300);});
+  window.addEventListener('load',function(){setTimeout(check,50);});
+  setTimeout(check,400);
+  setTimeout(self.resize,0);
+}
+HiCanvas.prototype.toLocal=function(ev){var r=this.canvas.getBoundingClientRect();return {x:ev.clientX-r.left,y:ev.clientY-r.top};};
+
+/* ---------- Schieberegler mit +/- Knöpfen ---------- */
+function Slider(el,o){
+  var self=this;this.o=o;this.v=o.value;
+  el.classList.add('ctl');
+  el.innerHTML='<label></label><div class="row"><button class="pm" aria-label="weniger">−</button><input type="range" min="0" max="1000" step="1"><button class="pm" aria-label="mehr">+</button><output></output></div>';
+  $('label',el).textContent=o.label;
+  this.input=$('input',el);this.out=$('output',el);
+  var b=$$('button',el);
+  function toT(v){return o.log?1000*Math.log(v/o.min)/Math.log(o.max/o.min):1000*(v-o.min)/(o.max-o.min);}
+  function fromT(t){return o.log?o.min*Math.pow(o.max/o.min,t/1000):o.min+(o.max-o.min)*t/1000;}
+  this.toT=toT;
+  function snap(v){var s=o.round||0;if(s)v=Math.round(v/s)*s;return clamp(v,o.min,o.max);}
+  this.input.addEventListener('input',function(){self.set(snap(fromT(+self.input.value)),true);});
+  function stepBy(dir){var st=o.step||((o.max-o.min)/100);self.set(snap(self.v+dir*st),true);}
+  [[b[0],-1],[b[1],1]].forEach(function(p){
+    var timer=null,rep=null;
+    p[0].addEventListener('pointerdown',function(e){e.preventDefault();stepBy(p[1]);timer=setTimeout(function(){rep=setInterval(function(){stepBy(p[1]);},70);},400);});
+    var stop=function(){clearTimeout(timer);clearInterval(rep);};
+    p[0].addEventListener('pointerup',stop);p[0].addEventListener('pointerleave',stop);p[0].addEventListener('pointercancel',stop);
+  });
+  this.set(o.value,false);
+}
+Slider.prototype.set=function(v,fire){this.v=v;this.input.value=Math.round(this.toT(v));this.out.textContent=this.o.fmt?this.o.fmt(v):fmt(v);if(fire&&this.o.onChange)this.o.onChange(v);};
+
+/* ---------- Auswahlknöpfe ---------- */
+function Seg(el,items,initial,onChange){
+  var self=this;this.value=initial;el.classList.add('seg');el.innerHTML='';
+  this.btns=items.map(function(it){
+    var b=document.createElement('button');b.innerHTML=it.label;b.dataset.key=it.key;
+    b.addEventListener('click',function(){self.set(it.key,true);});el.appendChild(b);return b;});
+  this.onChange=onChange;this.set(initial,false);
+}
+Seg.prototype.set=function(k,fire){this.value=k;this.btns.forEach(function(b){b.classList.toggle('on',b.dataset.key===String(k));});if(fire&&this.onChange)this.onChange(k);};
+
+/* ---------- Helligkeit ----------
+   Lichtmenge pro Fläche auf dem Schirm ~ d² / b².
+   rel = Vielfaches von "1-mm-Loch bei b = 100 mm". */
+function relBrightness(d,b){return d*d*(100/b)*(100/b);}
+function displayGain(rel){ // für die Darstellung: logarithmisch, wie unser Auge
+  return clamp((Math.log(rel)/Math.LN10+1.2)/2.6,0.03,1.35);
+}
+
+/* Helligkeit wie unser Auge sie empfindet (logarithmisch), 0…255 */
+function tone(v){if(v<=0)return 0;var t=(Math.log(v)*0.4343+2.8)/3.3;return t<0?0:(t>1?255:t*255);}
+
+/* ---------- Bild auf dem Schirm: jeder Punkt wird zu einem Lichtfleck ----------
+   Das (umgedrehte) Bild wird mit einer Kreisscheibe vom Radius R (in Pixeln) "verschmiert". */
+function ScreenSim(canvas,W,H){
+  canvas.width=W;canvas.height=H;this.canvas=canvas;this.ctx=canvas.getContext('2d');this.W=W;this.H=H;
+  this.off=document.createElement('canvas');this.off.width=W;this.off.height=H;
+  this.octx=this.off.getContext('2d',{willReadFrequently:true});
+  this.exposure=0.1;this.P=new Float32Array(H*(W+1)*3);this.img=this.ctx.createImageData(W,H);
+}
+ScreenSim.prototype.render=function(drawObj,R,E){ // E = Lichtmenge pro Fläche (relativ)
+  var W=this.W,H=this.H,o=this.octx,x,y,i,j;
+  o.setTransform(1,0,0,1,0,0);o.globalAlpha=1;o.globalCompositeOperation='source-over';o.fillStyle='#000';o.fillRect(0,0,W,H);
+  o.save();drawObj(o);o.restore();
+  var src=o.getImageData(0,0,W,H).data,P=this.P,W3=(W+1)*3;
+  for(y=0;y<H;y++){var a0=0,a1=0,a2=0,base=y*W3;P[base]=P[base+1]=P[base+2]=0;
+    for(x=0;x<W;x++){i=(y*W+x)*4;a0+=src[i];a1+=src[i+1];a2+=src[i+2];j=base+(x+1)*3;P[j]=a0;P[j+1]=a1;P[j+2]=a2;}}
+  R=clamp(R,0,70);
+  var rows=[],wsum=0,dy;
+  if(R<0.5){rows.push([0,0,0,1]);wsum=1;}
+  else{var Rc=Math.ceil(R+0.5);for(dy=-Rc;dy<=Rc;dy++){var rw=Math.min(1,R+0.5-Math.abs(dy));if(rw<=0)continue;
+    var wf=Math.sqrt(Math.max(0,R*R-dy*dy)),wi=Math.floor(wf),fr=wf-wi;rows.push([dy,wi,fr,rw]);wsum+=rw*(2*wi+1+2*fr);}}
+  var out=this.img.data,k=E*this.exposure/wsum/255,nr=rows.length;
+  for(y=0;y<H;y++){for(x=0;x<W;x++){var s0=0,s1=0,s2=0;
+    for(var r=0;r<nr;r++){var row=rows[r],yy=y+row[0];if(yy<0||yy>=H)continue;var b=yy*W3,wi2=row[1],w=row[3];
+      var xa=x-wi2,xb=x+wi2;if(xa<0)xa=0;if(xb>W-1)xb=W-1;
+      var ja=b+xa*3,jb=b+(xb+1)*3;s0+=w*(P[jb]-P[ja]);s1+=w*(P[jb+1]-P[ja+1]);s2+=w*(P[jb+2]-P[ja+2]);
+      if(row[2]>0){var wf2=w*row[2],xl=x-wi2-1,xr=x+wi2+1;
+        if(xl>=0){ja=b+xl*3;jb=ja+3;s0+=wf2*(P[jb]-P[ja]);s1+=wf2*(P[jb+1]-P[ja+1]);s2+=wf2*(P[jb+2]-P[ja+2]);}
+        if(xr<W){ja=b+xr*3;jb=ja+3;s0+=wf2*(P[jb]-P[ja]);s1+=wf2*(P[jb+1]-P[ja+1]);s2+=wf2*(P[jb+2]-P[ja+2]);}}}
+    i=(y*W+x)*4;var L=Math.max(s0,s1,s2)*k,q=L>0?tone(L)/L:0;out[i]=s0*k*q;out[i+1]=s1*k*q;out[i+2]=s2*k*q;out[i+3]=255;}}
+  this.ctx.putImageData(this.img,0,0);
+};
+
+/* ---------- Motive (Koordinaten in mm, y nach oben, Mitte = optische Achse) ---------- */
+var SCENES={
+  lampen:{name:'Zwei Lämpchen',h:60,draw:function(c){
+    function lamp(x,y,r,col){var g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,'#fff');g.addColorStop(.5,col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,7);c.fill();}
+    lamp(-22,10,6,'#ffd43b');lamp(22,10,6,'#ffd43b');lamp(-6,-22,4,'#74c0fc');lamp(6,-22,4,'#74c0fc');}},
+  kerze:{name:'Kerze',h:150,draw:function(c){
+    c.fillStyle='#f1e3c6';c.fillRect(-14,-75,28,95);
+    c.fillStyle='#333';c.fillRect(-1,20,2,8);
+    var g=c.createRadialGradient(0,42,2,0,40,22);g.addColorStop(0,'#fff');g.addColorStop(.35,'#ffe066');g.addColorStop(.75,'#ff922b');g.addColorStop(1,'rgba(255,100,0,0)');
+    c.fillStyle=g;c.beginPath();c.ellipse(0,42,11,22,0,0,7);c.fill();}},
+  haus:{name:'Haus',h:120,draw:function(c){
+    c.fillStyle='#4dabf7';c.fillRect(-3000,-10,6000,3000);
+    c.fillStyle='#ffe066';c.beginPath();c.arc(55,55,13,0,7);c.fill();
+    c.fillStyle='#2f9e44';c.fillRect(-3000,-3000,6000,2990);
+    c.fillStyle='#f8f0e3';c.fillRect(-40,-30,60,45);
+    c.fillStyle='#e03131';c.beginPath();c.moveTo(-48,15);c.lineTo(-10,48);c.lineTo(28,15);c.closePath();c.fill();
+    c.fillStyle='#1c7ed6';c.fillRect(-30,-8,14,12);c.fillRect(-2,-8,14,12);
+    c.fillStyle='#7f5539';c.fillRect(-18,-30,12,16);
+    c.fillStyle='#795548';c.fillRect(48,-30,6,22);c.fillStyle='#37b24d';c.beginPath();c.arc(51,-2,14,0,7);c.fill();}}
+};
+
+/* ---------- Seitenansicht: Strahlengang durch Loch oder Linse ----------
+   o = {g,b,d,f (null = nur Loch), pts:[{y,col}], ySpan, bMax, nRays, lens:'box'|'lens'|null, showFocus, power (statt f)} */
+function drawSideView(c,w,h,o){
+  c.fillStyle='#10131a';c.fillRect(0,0,w,h);
+  var P=(o.power!==undefined)?o.power:(o.f?1/o.f:0); // Brechkraft in 1/mm
+  var x0=w*0.05,avail=w*0.92,total=o.g+o.bMax,sxL,sxR,broken=false;
+  if(o.g/total<=(o.maxLeft||0.45)){sxL=sxR=avail/total;}else{broken=true;sxL=avail*0.33/o.g;sxR=avail*0.67/o.bMax;}
+  var xL=x0+o.g*sxL;
+  function X(z){return z<0?xL+z*sxL:xL+z*sxR;}
+  var sy=h*0.44/o.ySpan;function Y(y){return h/2-y*sy;}
+  // Achse
+  c.strokeStyle='rgba(255,255,255,.25)';c.setLineDash([6,6]);c.lineWidth=1;c.beginPath();c.moveTo(0,h/2);c.lineTo(w,h/2);c.stroke();c.setLineDash([]);
+  if(broken){c.fillStyle='#10131a';c.fillRect(x0+(xL-x0)*0.45,h/2-8,14,16);c.strokeStyle='rgba(255,255,255,.5)';c.beginPath();
+    var bx=x0+(xL-x0)*0.45;c.moveTo(bx-3,h/2+8);c.lineTo(bx+3,h/2-8);c.moveTo(bx+9,h/2+8);c.lineTo(bx+15,h/2-8);c.stroke();}
+  var b=o.b,d=o.d,nR=o.nRays||7;
+  c.globalCompositeOperation='lighter';
+  o.pts.forEach(function(p){
+    var hs=[],k;for(k=0;k<nR;k++)hs.push(-d/2+d*k/(nR-1));
+    // Für weit entfernte Gegenstände: Punkte so behandeln, als hätten sie einen größeren Winkelabstand, damit die Bildpunkte getrennt sichtbar sind
+    var yp=o.angRef?p.y*Math.max(1,o.g/o.angRef):p.y;
+    var ys=hs.map(function(hh){var s=(hh-yp)/o.g-hh*P;return hh+s*b;});
+    var yMin=Math.min.apply(null,ys),yMax=Math.max.apply(null,ys);
+    // Lichtkegel
+    c.fillStyle=p.col.replace('1)','.16)');
+    c.beginPath();c.moveTo(X(-o.g),Y(p.y));c.lineTo(xL,Y(d/2));c.lineTo(xL,Y(-d/2));c.closePath();c.fill();
+    c.beginPath();c.moveTo(xL,Y(d/2));c.lineTo(X(b),Y(ys[nR-1]));c.lineTo(X(b),Y(ys[0]));c.lineTo(xL,Y(-d/2));c.closePath();c.fill();
+    c.strokeStyle=p.col.replace('1)','.7)');c.lineWidth=1.2;
+    hs.forEach(function(hh,i){c.beginPath();c.moveTo(X(-o.g),Y(p.y));c.lineTo(xL,Y(hh));c.lineTo(X(b),Y(ys[i]));c.stroke();});
+    // Weiterlauf (gedachter Strahl hinter dem Schirm)
+    if(o.showBeyond){c.strokeStyle=p.col.replace('1)','.22)');c.setLineDash([4,5]);var zE=o.bMax;
+      hs.forEach(function(hh){var s=(hh-yp)/o.g-hh*P;c.beginPath();c.moveTo(X(b),Y(hh+s*b));c.lineTo(X(zE),Y(hh+s*zE));c.stroke();});c.setLineDash([]);}
+    // Fleck auf dem Schirm
+    c.strokeStyle=p.col;c.lineWidth=7;c.beginPath();c.moveTo(X(b)+4,Y(yMax)-1);c.lineTo(X(b)+4,Y(yMin)+1);c.stroke();
+    if(o.showFocus&&P>0){var bi=1/(P-1/o.g);if(bi>0&&bi<o.bMax*1.02){var yi=-yp*bi/o.g;c.strokeStyle='#fff';c.lineWidth=1.5;c.beginPath();c.arc(X(bi),Y(yi),5,0,7);c.stroke();}}
+  });
+  c.globalCompositeOperation='source-over';
+  // Gegenstand (Pfeil)
+  var ys2=o.pts.map(function(p){return p.y;}),top=Math.max.apply(null,ys2),bot=Math.min.apply(null,ys2);
+  if(o.pts.length>1){c.strokeStyle='rgba(255,255,255,.6)';c.lineWidth=3;c.beginPath();c.moveTo(X(-o.g),Y(bot));c.lineTo(X(-o.g),Y(top));c.stroke();}
+  o.pts.forEach(function(p){c.fillStyle=p.col;c.beginPath();c.arc(X(-o.g),Y(p.y),5,0,7);c.fill();});
+  // Wand mit Loch / Blende
+  c.fillStyle='#868e96';var wt=8;
+  c.fillRect(xL-wt/2,0,wt,Y(d/2));c.fillRect(xL-wt/2,Y(-d/2),wt,h-Y(-d/2));
+  if(o.lens==='box'){c.fillStyle='rgba(255,212,59,.25)';c.strokeStyle='#ffd43b';c.lineWidth=2;var bh=Y(-d/2)-Y(d/2);c.fillRect(xL-14,Y(d/2),28,bh);c.strokeRect(xL-14,Y(d/2),28,bh);
+    c.fillStyle='#ffd43b';c.font='bold 22px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('?',xL,h/2);}
+  else if(o.lens==='lens'&&P!==0){var half=Y(-d/2)-h/2,bulge=clamp(Math.abs(P)*900,3,16);
+    c.fillStyle='rgba(165,216,255,.35)';c.strokeStyle='#a5d8ff';c.lineWidth=2;c.beginPath();
+    if(P>0){c.moveTo(xL,h/2-half);c.quadraticCurveTo(xL+bulge*2,h/2,xL,h/2+half);c.quadraticCurveTo(xL-bulge*2,h/2,xL,h/2-half);}
+    else{var e=bulge;c.moveTo(xL-e,h/2-half);c.lineTo(xL+e,h/2-half);c.quadraticCurveTo(xL,h/2,xL+e,h/2+half);c.lineTo(xL-e,h/2+half);c.quadraticCurveTo(xL,h/2,xL-e,h/2-half);}
+    c.closePath();c.fill();c.stroke();}
+  // Schirm
+  c.fillStyle='#e9ecef';c.fillRect(X(b)-2,h*0.04,4,h*0.92);
+  c.fillStyle='rgba(255,255,255,.75)';c.font='13px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='top';
+  c.fillText('Gegenstand',X(-o.g)+10,4);c.fillText(o.f||o.lens==='box'?'Linse':'Loch',xL,4);c.fillText('Schirm',X(b),4);
+  c.textBaseline='bottom';c.fillText('b = '+fmtLen(b),(xL+X(b))/2,h-4);
+  c.fillText('g = '+fmtLen(o.g),(X(-o.g)+xL)/2,h-4);
+}
+
+/* Durchmesser des Lichtflecks eines Punktes auf dem Schirm (mm) */
+function blurDiameter(d,b,g,f){var P=f?1/f:0;return d*Math.abs(1-b*P+b/g);}
+
+/* ---------- Eingaben merken (nur auf diesem Gerät) ---------- */
+function persistInputs(prefix){
+  $$('input[data-save],textarea[data-save],select[data-save]').forEach(function(el){
+    var key=prefix+':'+el.dataset.save;
+    try{var v=localStorage.getItem(key);if(v!==null){if(el.type==='checkbox')el.checked=v==='1';else el.value=v;}}catch(e){}
+    el.addEventListener('input',function(){try{localStorage.setItem(key,el.type==='checkbox'?(el.checked?'1':'0'):el.value);}catch(e){}});
+  });
+}
+/* Alle Tabellen/Antworten als Text kopieren */
+function setupCopy(btn,title){
+  if(!btn)return;
+  btn.addEventListener('click',function(){
+    var lines=[title,''];
+    $$('[data-q]').forEach(function(sec){
+      lines.push('## '+sec.dataset.q);
+      $$('table',sec).forEach(function(t){$$('tr',t).forEach(function(tr){lines.push($$('th,td',tr).map(function(td){var i=$('input,select',td);return i?(i.value||'–'):td.textContent.trim();}).join(' | '));});});
+      $$('textarea',sec).forEach(function(t){lines.push(t.value||'–');});
+      lines.push('');
+    });
+    var txt=lines.join('\n');
+    function done(ok){btn.textContent=ok?'✓ Kopiert! Jetzt z. B. in Notizen einfügen':'Kopieren nicht möglich';setTimeout(function(){btn.textContent='📋 Ergebnisse kopieren';},2500);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){done(true);},function(){fallback();});}else fallback();
+    function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{done(document.execCommand('copy'));}catch(e){done(false);}document.body.removeChild(ta);}
+  });
+}
+
+/* ---------- Schritt 1/2: freies Erkunden, dann Lot und Winkel ---------- */
+(function(){
+var HD=14,DEG=Math.PI/180,SW=200,SH=125,OX=118,OY=62.5,NG=1.5;
+var E={shape:'quader',rot:0,beam:'one',lx:16,ly:22,dir:20,lot:false,win:false};
+function rot(pts){var c=Math.cos(E.rot*DEG),s=Math.sin(E.rot*DEG);return pts.map(function(p){var x=p[0],y=p[1];return [OX+x*c-y*s,OY+x*s+y*c];});}
+function circ(r,a0,a1,n){var p=[];for(var i=0;i<=n;i++){var a=a0+(a1-a0)*i/n;p.push([r*Math.cos(a),r*Math.sin(a)]);}return p;}
+function shapeE(){
+  switch(E.shape){
+    case 'quader':return rot([[-30,-20],[30,-20],[30,20],[-30,20]]);
+    case 'prisma':var h=60*Math.sqrt(3)/2;return rot([[0,-h*0.6],[30,h*0.4],[-30,h*0.4]]);
+    case 'kreis':var p=circ(28,0,2*Math.PI,96);p.pop();return rot(p);
+    case 'halb':return rot(circ(32,-Math.PI/2,Math.PI/2,64).map(function(q){return [q[0]-10,q[1]];}));
+    case 'linse':var R=60,a=35,tm=Math.asin(a/R),sag=R-Math.sqrt(R*R-a*a),T=2*sag+1.5,pts=[],i,th;
+      for(i=0;i<=40;i++){th=-tm+2*tm*i/40;pts.push([T/2-R+R*Math.cos(th),R*Math.sin(th)]);}
+      for(i=0;i<=40;i++){th=tm-2*tm*i/40;pts.push([-T/2+R-R*Math.cos(th),R*Math.sin(th)]);}
+      return rot(pts);
+  }
+}
+function insideE(P,x,y){var c=false;for(var i=0,j=P.length-1;i<P.length;j=i++){var xi=P[i][0],yi=P[i][1],xj=P[j][0],yj=P[j][1];
+  if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c;}return c;}
+function traceE(px,py,ux,uy,P){
+  var path=[[px,py]],hits=[];
+  for(var it=0;it<30;it++){
+    var best=1e9,bn=null;
+    for(var i=0,j=P.length-1;i<P.length;j=i++){var ax=P[j][0],ay=P[j][1],ex=P[i][0]-ax,ey=P[i][1]-ay,den=ux*ey-uy*ex;if(Math.abs(den)<1e-12)continue;
+      var t=((ax-px)*ey-(ay-py)*ex)/den,s=((ax-px)*uy-(ay-py)*ux)/den;if(t>1e-6&&s>=0&&s<=1&&t<best){best=t;var L=Math.hypot(ex,ey);bn=[-ey/L,ex/L];}}
+    if(!bn){path.push([px+ux*400,py+uy*400]);break;}
+    var qx=px+ux*best,qy=py+uy*best;path.push([qx,qy]);
+    var nx=bn[0],ny=bn[1];if(nx*ux+ny*uy>0){nx=-nx;ny=-ny;}
+    var inG=insideE(P,qx-ux*1e-3,qy-uy*1e-3),n1=inG?NG:1,n2=inG?1:NG,eta=n1/n2,ci=-(nx*ux+ny*uy),kk=1-eta*eta*(1-ci*ci),u0=[ux,uy],tir=kk<0;
+    if(tir){ux=ux+2*ci*nx;uy=uy+2*ci*ny;}else{var f=eta*ci-Math.sqrt(kk);ux=eta*ux+f*nx;uy=eta*uy+f*ny;}
+    var L2=Math.hypot(ux,uy);ux/=L2;uy/=L2;
+    hits.push({x:qx,y:qy,nx:nx,ny:ny,u0:u0,u1:[ux,uy],into:!inG,tir:tir});
+    px=qx+ux*1e-3;py=qy+uy*1e-3;
+  }
+  return {path:path,hits:hits};
+}
+var cvE=new HiCanvas($('#cvE'),SW/SH,function(c,w,h){
+  var s=w/SW;c.fillStyle='#10131a';c.fillRect(0,0,w,h);
+  var P=shapeE();
+  c.beginPath();P.forEach(function(p,i){i?c.lineTo(p[0]*s,p[1]*s):c.moveTo(p[0]*s,p[1]*s);});c.closePath();
+  c.fillStyle='rgba(165,216,255,.2)';c.fill();c.strokeStyle='rgba(165,216,255,.9)';c.lineWidth=2;c.stroke();
+  var ux=Math.cos(E.dir*DEG),uy=Math.sin(E.dir*DEG),offs=E.beam==='one'?[0]:[-5,0,5],main=null;
+  c.globalCompositeOperation='lighter';
+  offs.forEach(function(o){var r=traceE(E.lx-uy*o,E.ly+ux*o,ux,uy,P);if(o===0)main=r;
+    c.strokeStyle='rgba(255,70,60,.95)';c.lineWidth=o===0?3:2;c.beginPath();r.path.forEach(function(q,j){j?c.lineTo(q[0]*s,q[1]*s):c.moveTo(q[0]*s,q[1]*s);});c.stroke();});
+  c.globalCompositeOperation='source-over';
+  var lines=[];
+  if(E.lot)main.hits.slice(0,4).forEach(function(H,k){
+    c.save();c.setLineDash([5,5]);c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=1.5;c.beginPath();
+    c.moveTo((H.x+H.nx*22)*s,(H.y+H.ny*22)*s);c.lineTo((H.x-H.nx*22)*s,(H.y-H.ny*22)*s);c.stroke();c.restore();
+    if(E.win){
+      var a=Math.acos(clamp(-(H.u0[0]*H.nx+H.u0[1]*H.ny),-1,1))/DEG;
+      arc(H.x,H.y,[H.nx,H.ny],[-H.u0[0],-H.u0[1]],'#ffd43b','α'+(k+1));
+      var b;
+      if(H.tir){b=a;arc(H.x,H.y,[H.nx,H.ny],H.u1,'#ff8787','');}
+      else{b=Math.acos(clamp(-(H.u1[0]*H.nx+H.u1[1]*H.ny),-1,1))/DEG;arc(H.x,H.y,[-H.nx,-H.ny],H.u1,'#69db7c','β'+(k+1));}
+      lines.push('<b>Stelle '+(k+1)+'</b> ('+(H.into?'Luft → Glas':'Glas → Luft')+'): α'+(k+1)+' = '+fmt(a,0)+'°, '+(H.tir?'<b>Totalreflexion</b> – kein Licht tritt aus':'β'+(k+1)+' = '+fmt(b,0)+'°'));
+    }
+    c.fillStyle='#fff';c.font='bold 13px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='middle';
+  });
+  function arc(x,y,v1,v2,col,lab){var a1=Math.atan2(v1[1],v1[0]),a2=Math.atan2(v2[1],v2[0]),d=a2-a1;while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;
+    var r=11*s;c.strokeStyle=col;c.lineWidth=2.5;c.beginPath();c.arc(x*s,y*s,r,a1,a1+d,d<0);c.stroke();
+    if(lab){var m=a1+d/2;c.fillStyle=col;c.font='bold 14px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(lab,x*s+Math.cos(m)*(r+12),y*s+Math.sin(m)*(r+12));}}
+  // Lampe und Zielpunkt
+  c.fillStyle='rgba(255,212,59,.25)';c.beginPath();c.arc(E.lx*s,E.ly*s,22,0,7);c.fill();c.fillStyle='#ffd43b';c.beginPath();c.arc(E.lx*s,E.ly*s,9,0,7);c.fill();
+  var hx=(E.lx+ux*HD)*s,hy=(E.ly+uy*HD)*s;c.fillStyle='rgba(255,255,255,.15)';c.beginPath();c.arc(hx,hy,20,0,7);c.fill();c.strokeStyle='#fff';c.lineWidth=2.5;c.beginPath();c.arc(hx,hy,9,0,7);c.stroke();
+  $('#angList').innerHTML=E.win?lines.join('<br>'):(E.lot?'Tippe auf „Winkel einzeichnen“, um die Winkel zu sehen.':'');
+});
+new Seg($('#segE'),[{key:'quader',label:'Quader'},{key:'prisma',label:'Prisma'},{key:'kreis',label:'Glaskugel'},{key:'halb',label:'Halbkreis'},{key:'linse',label:'Linse'}],E.shape,function(k){E.shape=k;cvE.request();});
+new Seg($('#segEB'),[{key:'one',label:'ein Strahl'},{key:'three',label:'schmales Bündel'}],E.beam,function(k){E.beam=k;cvE.request();});
+new Slider($('#sRot'),{label:'Glaskörper drehen',min:-90,max:90,value:0,step:1,round:1,fmt:function(v){return fmt(v,0)+'°';},onChange:function(v){E.rot=v;cvE.request();}});
+function tog(id,key){var b=$(id);b.addEventListener('click',function(){E[key]=!E[key];if(key==='win'&&E.win)E.lot=true;if(key==='lot'&&!E.lot)E.win=false;
+  $('#btnLot').classList.toggle('on',E.lot);$('#btnLot').textContent=(E.lot?'● ':'○ ')+'Lot einzeichnen';
+  $('#btnWin').classList.toggle('on',E.win);$('#btnWin').textContent=(E.win?'● ':'○ ')+'Winkel einzeichnen';cvE.request();});}
+tog('#btnLot','lot');tog('#btnWin','win');
+$('#unlock').addEventListener('click',function(){$('#lotCtl').style.display='';$('#cvE').scrollIntoView({behavior:'smooth',block:'start'});});
+(function(){var el=$('#cvE'),drag=null;
+  function pos(ev){var p=cvE.toLocal(ev),s=cvE.w/SW;return [clamp(p.x/s,2,SW-2),clamp(p.y/s,2,SH-2)];}
+  function hpos(){return [E.lx+Math.cos(E.dir*DEG)*HD,E.ly+Math.sin(E.dir*DEG)*HD];}
+  el.addEventListener('pointerdown',function(e){var q=pos(e),h=hpos(),dl=Math.hypot(q[0]-E.lx,q[1]-E.ly),da=Math.hypot(q[0]-h[0],q[1]-h[1]);drag=dl<da?'l':'a';el.setPointerCapture(e.pointerId);move(e);});
+  function move(e){if(!drag)return;var q=pos(e);if(drag==='l'){E.lx=q[0];E.ly=q[1];}else{if(Math.hypot(q[0]-E.lx,q[1]-E.ly)<2)return;E.dir=Math.atan2(q[1]-E.ly,q[0]-E.lx)/DEG;}cvE.request();}
+  el.addEventListener('pointermove',move);el.addEventListener('pointerup',function(){drag=null;});el.addEventListener('pointercancel',function(){drag=null;});
+})();
+})();
+persistInputs('lk3g');setupCopy($('#copy'),'Lochkamera – Station 3');
+</script>
+
+<footer class="legal">
+<details><summary>Impressum</summary><div>
+<p><b>Angaben gemäß § 5 DDG</b><br>Thomas Vieth<br>Kaiserin Augusta Schule<br>Georgstr. 10<br>50676 Köln</p>
+<p><b>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</b> Thomas Vieth, Anschrift wie oben.</p>
+<p>Diese Seite ist Unterrichtsmaterial für den Physikunterricht. Sie verfolgt keine kommerziellen Zwecke.</p>
+</div></details>
+<details><summary>Datenschutzerklärung</summary><div>
+<p><b>Verantwortlicher</b><br>Thomas Vieth, Kaiserin Augusta Schule, Georgstr. 10, 50676 Köln</p>
+<p><b>Kurz gesagt</b><br>Diese Seite sammelt keine personenbezogenen Daten. Es gibt keine Anmeldung, keine Cookies, keine Statistik- oder Tracking-Werkzeuge, keine Werbung und keine eingebundenen Inhalte von anderen Servern (keine Schriften, Bibliotheken oder Videos aus dem Internet). Alles, was die Seite braucht, steckt in dieser einen Datei.</p>
+<p><b>Hosting bei GitHub Pages</b><br>Wenn du die Seite im Internet aufrufst, wird sie von GitHub Pages ausgeliefert, einem Dienst der GitHub Inc. (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, insbesondere deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Datei sowie Browser- und Betriebssystemangaben. GitHub speichert diese Daten in Server-Protokollen, um den Dienst sicher und stabil zu betreiben. Rechtsgrundlage ist Art. 6 Abs. 1 lit. e und f DSGVO (Bereitstellung von Unterrichtsmaterial; sicherer Betrieb der Website). Dabei können Daten in die USA übermittelt werden. GitHub ist unter dem EU-US Data Privacy Framework zertifiziert (Art. 45 DSGVO). Näheres: GitHub Privacy Statement unter docs.github.com/site-policy/privacy-policies/github-general-privacy-statement.</p>
+<p>Lädst du die Datei herunter und öffnest sie auf deinem Gerät, findet überhaupt keine Datenübertragung statt.</p>
+<p><b>Speicherung deiner Eingaben auf deinem Gerät</b><br>Antworten, Messwerte und Einstellungen, die du in die Felder einträgst, speichert die Seite im lokalen Speicher deines Browsers (localStorage). So sind sie beim nächsten Öffnen wieder da. Diese Daten bleiben ausschließlich auf deinem Gerät und werden nie an den Verantwortlichen oder an GitHub gesendet. Du kannst sie jederzeit löschen, indem du die Felder leerst oder die Website-Daten in den Einstellungen deines Browsers löschst. Der Knopf „Ergebnisse kopieren“ legt deine Antworten nur in die Zwischenablage deines Geräts.</p>
+<p><b>Deine Rechte</b><br>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Widerspruch (Art. 21). Wende dich dazu an den Verantwortlichen unter der oben genannten Anschrift. Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (Kavalleriestr. 2–4, 40213 Düsseldorf).</p>
+<p>Stand: Oktober 2026</p>
+</div></details>
+</footer>
+
+</body></html>

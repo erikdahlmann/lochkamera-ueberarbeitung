@@ -1,0 +1,173 @@
+</head><body>
+<div id="nojs" class="nojs">Wenn du diesen roten Hinweis siehst, laufen die Animationen nicht. Öffne die Datei bitte in Safari und nicht nur in der Vorschau. Frag sonst deine Lehrkraft.</div>
+<header><div class="in"><div class="kicker">Lochkamera · Station 6 von 6</div><h1>Wie entsteht das Bild? Die Linsengleichung</h1>
+<p>Ihr wisst, wie eine Linse Licht bündelt und warum sie das kann. Jetzt findet ihr heraus, <b>wo</b> das Bild entsteht und <b>wie groß</b> es wird – und könnt es sogar ausrechnen.</p></div></header>
+<main>
+
+<section class="card" id="lab">
+<span class="step">Schritt 1</span>
+<h2>Zurück ins Linsen-Labor: Die Kerze kommt näher</h2>
+<!--@3d-->
+<p>Ihr kennt das Linsen-Labor aus Station 2. Jetzt steht alles <b>maßstäblich</b> auf einer optischen Bank, und ihr könnt den Gegenstand – eine Kerze – verschieben. <b>Ziehe die Kerze oder den Schirm</b> mit dem Finger oder benutze die Regler. Neben den Gegenständen ziehen dreht die Ansicht.</p>
+<!--@2d-->
+<p>Ihr kennt das Linsen-Labor aus Station 2. Jetzt ist alles <b>maßstäblich</b> gezeichnet, und ihr könnt den Gegenstand – eine Kerze – verschieben. <b>Ziehe die Kerze oder den Schirm</b> mit dem Finger oder benutze die Regler.</p>
+<!--@end-->
+<div class="ctls"><div><b>Linse</b><div id="segLens"></div></div><div><b>Ansicht</b><div id="segView"></div></div></div>
+<!--@3d-->
+<div id="v6"></div>
+<p class="cap">3D-Modell, alles maßstäblich. Farbige Strahlen: Licht von der Flammenspitze (orange), der Mitte (gelb) und dem Fuß der Kerze (blau). Gestrichelt: so liefen die Strahlen hinter dem Schirm weiter. Auf dem Schirm siehst du das echte Bild – schau auch von hinten!</p>
+<!--@2d-->
+<canvas id="side" class="drag"></canvas>
+<p class="cap">Seitenansicht: Abstände maßstäblich, Höhen vergrößert gezeichnet. Farbige Strahlen: Licht von der Flammenspitze (orange), der Mitte (gelb) und dem Fuß der Kerze (blau). Gestrichelt: so liefen die Strahlen hinter dem Schirm weiter.</p>
+<!--@end-->
+<div class="grid2 even">
+<!--@3d-->
+  <div class="screen screenbox"><canvas id="scr"></canvas><span class="tag">Schirm von hinten gesehen</span><p class="cap">Bild auf dem Schirm (15 cm × 11 cm), echte Größe im Verhältnis.</p></div>
+<!--@2d-->
+  <div class="screen"><canvas id="scr"></canvas><p class="cap">Bild auf dem Schirm (15 cm × 11 cm), echte Größe im Verhältnis.</p></div>
+<!--@end-->
+  <div>
+    <div class="meters" style="grid-template-columns:1fr 1fr;margin-top:0">
+      <div class="meter"><div class="lbl">Lichtfleck eines Punktes</div><div class="val" id="mD">–</div></div>
+      <div class="meter"><div class="lbl">Bildgröße B</div><div class="val" id="mB">–</div></div>
+    </div>
+    <p id="sharpMsg" style="font-weight:800;font-size:20px;margin:12px 0"></p>
+  </div>
+</div>
+<div class="ctls"><div id="sG"></div><div id="sB"></div><div id="sD"></div><div id="sH"></div></div>
+<div><b>Hilfen einblenden</b><div class="seg" id="helpBtns">
+<button data-k="focus">○ Scharfen Bildpunkt</button>
+<button data-k="fpts">○ Brennpunkte F</button>
+<button data-k="special">○ Besondere Strahlen</button>
+<button data-k="construct">○ Bild einzeichnen</button></div></div>
+<p><button class="primary take">📥 Messwert übernehmen</button> <span class="small takeMsg">(für Schritt 3 – nur wenn das Bild scharf ist)</span></p>
+
+<div class="box task" data-q="Kerze kommt näher"><b>Aufgabe 1 – Die Kerze kommt näher</b>
+<p>Nehmt Linse B (f = 100 mm). Stellt die Kerze auf die Abstände in der Tabelle und verschiebt jedes Mal den Schirm, bis das Bild scharf ist.</p>
+<div class="tablewrap"><table class="t">
+<tr><th>Abstand Kerze – Linse g</th><th>Abstand Linse – Schirm b (scharf)</th><th>Bild größer oder kleiner als die Kerze?</th></tr>
+<tr><td>600 mm</td><td><input data-save="k1b" inputmode="decimal"></td><td><input data-save="k1g"></td></tr>
+<tr><td>300 mm</td><td><input data-save="k2b" inputmode="decimal"></td><td><input data-save="k2g"></td></tr>
+<tr><td>200 mm</td><td><input data-save="k3b" inputmode="decimal"></td><td><input data-save="k3g"></td></tr>
+<tr><td>150 mm</td><td><input data-save="k4b" inputmode="decimal"></td><td><input data-save="k4g"></td></tr>
+<tr><td>120 mm</td><td><input data-save="k5b" inputmode="decimal"></td><td><input data-save="k5g"></td></tr>
+<tr><td>80 mm</td><td><input data-save="k6b" inputmode="decimal"></td><td><input data-save="k6g"></td></tr>
+</table></div>
+<ol><li>Wie verändern sich b und die Bildgröße, wenn die Kerze näher kommt?</li>
+<li>Was passiert, wenn die Kerze näher an der Linse steht als 100 mm?</li></ol>
+<textarea data-save="a1" placeholder="Je näher die Kerze, desto …"></textarea>
+</div>
+</section>
+
+<section class="card">
+<span class="step">Schritt 2</span>
+<h2>Wie entsteht das Bild? Drei besondere Strahlen</h2>
+<p>Von der Flammenspitze gehen viele Strahlen durch die Linse. Wo sie sich treffen, entsteht der <b>Bildpunkt</b> der Spitze. Um ihn zu finden, muss man nicht alle Strahlen zeichnen: <b>drei besondere Strahlen</b> reichen.</p>
+<p><button id="goLab">↑ Zur Simulation: „Brennpunkte F“ und „Besondere Strahlen“ einschalten</button></p>
+<details open><summary>So verlaufen die drei besonderen Strahlen</summary><div>
+<ul>
+<li><span class="chip" style="background:#e03131">Parallelstrahl</span> läuft parallel zur Achse auf die Linse zu und geht danach durch den Brennpunkt F′.</li>
+<li><span class="chip" style="background:#2f9e44">Mittelpunktstrahl</span> geht durch die Mitte der Linse und wird nicht abgelenkt.</li>
+<li><span class="chip" style="background:#9c36b5">Brennpunktstrahl</span> geht vor der Linse durch den Brennpunkt F und läuft danach parallel zur Achse.</li>
+</ul>
+<!--@3d-->
+<p class="small">Für die Zeichnung denkt man sich die Linse als senkrechte Ebene (gestrichelt), an der die Strahlen abknicken – auch dort, wo die echte Linse schon zu Ende ist. Die besonderen Strahlen liegen in der Ebene durch die Achse und die Flammenspitze.</p></div></details>
+<!--@2d-->
+<p class="small">Für die Zeichnung denkt man sich die Linse als senkrechte Linie (gestrichelt), an der die Strahlen abknicken – auch dort, wo die echte Linse schon zu Ende ist.</p></div></details>
+<!--@end-->
+
+<div class="box task" data-q="Bildentstehung"><b>Aufgabe 2 – Wo steht die Kerze?</b>
+<p>Schaltet „Brennpunkte F“, „Besondere Strahlen“ und „Bild einzeichnen“ ein. Bleibt bei Linse B. Schiebt die Kerze von weit weg langsam auf die Linse zu.</p>
+<div class="tablewrap"><table class="t">
+<tr><th>Kerze steht …</th><th>Wo entsteht das Bild?</th><th>Bild ist größer / gleich / kleiner?</th><th>aufrecht / umgekehrt?</th></tr>
+<tr><td>weiter weg als 2F</td><td><input data-save="f1a"></td><td><input data-save="f1b"></td><td><input data-save="f1c"></td></tr>
+<tr><td>genau bei 2F</td><td><input data-save="f2a"></td><td><input data-save="f2b"></td><td><input data-save="f2c"></td></tr>
+<tr><td>zwischen 2F und F</td><td><input data-save="f3a"></td><td><input data-save="f3b"></td><td><input data-save="f3c"></td></tr>
+<tr><td>genau bei F</td><td><input data-save="f4a"></td><td><input data-save="f4b"></td><td><input data-save="f4c"></td></tr>
+<tr><td>näher als F</td><td><input data-save="f5a"></td><td><input data-save="f5b"></td><td><input data-save="f5c"></td></tr>
+</table></div>
+<textarea data-save="a2" placeholder="Wo steht bei eurer Lochkamera der Gegenstand? Welcher Fall ist das?"></textarea>
+</div>
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<ul>
+<li>Gegenstand weit weg (weiter als 2F): Bild <b>verkleinert, umgekehrt</b>, zwischen F′ und 2F′. → <b>Kamera, Auge, Lochkamera mit Linse</b></li>
+<li>Gegenstand bei 2F: Bild <b>gleich groß</b>, umgekehrt, bei 2F′.</li>
+<li>Gegenstand zwischen 2F und F: Bild <b>vergrößert, umgekehrt</b>, weiter weg als 2F′. → <b>Beamer, Projektor</b></li>
+<li>Gegenstand bei F: Die Strahlen laufen parallel – <b>kein Bild</b>.</li>
+<li>Gegenstand näher als F: Kein Bild auf dem Schirm. Schaut man durch die Linse, sieht man ein <b>vergrößertes, aufrechtes</b> Bild. → <b>Lupe</b> (man nennt es <b>virtuelles</b> Bild)</li>
+</ul></div></details>
+</section>
+
+<section class="card">
+<span class="step">Schritt 3</span>
+<h2>Messen: Gibt es eine Gleichung?</h2>
+<p>Stellt im Linsen-Labor (Schritt 1) die Kerze irgendwohin, stellt das Bild <b>scharf</b> und tippt auf <b>Messwert übernehmen</b>. Die Simulation schreibt <i>f</i>, <i>g</i>, <i>b</i>, die Kerzengröße <i>G</i> und die Bildgröße <i>B</i> in die Tabelle. Die grauen Spalten rechnet ihr selbst aus (Taschenrechner!).</p>
+<p><button id="goLab2">↑ Zum Linsen-Labor</button> <button class="primary take">📥 Messwert übernehmen</button> <button id="clear">Tabelle leeren</button></p>
+<div class="tablewrap" data-q="Messtabelle Simulation"><table class="t" id="mt">
+<thead><tr><th>f</th><th>g</th><th>b</th><th>G</th><th>B</th><th style="background:#e9ecef">B : G</th><th style="background:#e9ecef">b : g</th><th style="background:#e9ecef">1/g + 1/b</th><th style="background:#e9ecef">1/f</th><th></th></tr></thead>
+<tbody></tbody></table></div>
+<p class="small">Längen in mm. Für 1/g, 1/b und 1/f: mindestens 4 Stellen nach dem Komma (z. B. 1/150 = 0,0067).</p>
+<p><button id="checkT">✓ Rechnungen prüfen</button> <span id="checkMsg" class="small"></span></p>
+
+<div class="box task" data-q="Abbildungsgleichung"><b>Aufgabe 3 – Die Abbildungsgleichung</b>
+<ol>
+<li>Nehmt mindestens 5 Messwerte mit verschiedenen Kerzen-Abständen auf – auch mit anderen Linsen.</li>
+<li>Vergleicht die Spalten <b>B : G</b> und <b>b : g</b>. Was fällt euch auf?</li>
+<li>Formuliert eine Gleichung.</li>
+</ol>
+<textarea data-save="a2" placeholder="Uns fällt auf … Die Gleichung lautet …"></textarea></div>
+
+<div class="box task" data-q="Linsengleichung"><b>Aufgabe 4 – Die Linsengleichung</b>
+<ol>
+<li>Vergleicht die Spalten <b>1/g + 1/b</b> und <b>1/f</b>. Was fällt euch auf?</li>
+<li>Schaut euch das Diagramm unten an: Wie hängt <i>b</i> von <i>g</i> ab? Was passiert mit <i>b</i>, wenn <i>g</i> sehr groß wird – und wenn <i>g</i> fast so klein wie <i>f</i> wird?</li>
+</ol>
+<textarea data-save="a3" placeholder="Uns fällt auf … Die Gleichung lautet …"></textarea></div>
+
+<h3>Diagramm: Bildweite b über Gegenstandsweite g</h3>
+<canvas id="chart"></canvas>
+<div class="seg"><button id="curveBtn">○ Kurven nach der Linsengleichung zeigen</button></div>
+
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<p><b>Abbildungsgleichung:</b> &nbsp; B : G = b : g &nbsp; (Das Bild ist so oft größer als der Gegenstand, wie die Bildweite größer ist als die Gegenstandsweite.)</p>
+<p><b>Linsengleichung:</b> &nbsp; 1/f = 1/g + 1/b</p>
+<p>Ist der Gegenstand sehr weit weg, wird 1/g fast 0. Dann ist b ≈ f – genau das habt ihr in Station 2 an der Lochkamera gesehen!</p>
+</div></details>
+</section>
+
+<section class="card" data-q="Rechenaufgaben">
+<span class="step">Schritt 4</span>
+<h2>Rechnen statt Probieren: eure Lochkamera</h2>
+<p>Mit den beiden Gleichungen könnt ihr vorhersagen, wo der Schirm stehen muss. Rechnet und prüft dann mit der Simulation oben.</p>
+<div id="quiz"></div>
+</section>
+
+<section class="card" data-q="Experiment optische Bank">
+<span class="step">Schritt 5</span>
+<h2>Experiment: Gilt die Linsengleichung wirklich?</h2>
+<div class="box safety"><b>Sicherheit</b> Brennende Kerze nur auf feuerfester Unterlage, Haare zurückbinden, nichts über die Flamme halten. Besser: eine LED-Lampe mit Pfeil-Blende als Gegenstand.</div>
+<p><b>Material:</b> optische Bank oder Maßband auf dem Tisch, Kerze oder Lampe als Gegenstand, Linsen B und C, Schirm, Lineal.</p>
+<div class="box task"><b>Durchführung</b>
+<ol>
+<li>Messt die Höhe <i>G</i> des Gegenstands (Flamme oder Pfeil).</li>
+<li>Stellt die Linse im Abstand <i>g</i> vor den Gegenstand.</li>
+<li>Verschiebt den Schirm, bis das Bild scharf ist. Messt <i>b</i> und die Bildgröße <i>B</i>.</li>
+<li>Wiederholt das für mehrere Abstände <i>g</i> und für beide Linsen. Probiert auch g = 2f.</li>
+<li>Stellt die Linse näher als f an den Gegenstand. Findet ihr ein Bild auf dem Schirm? Schaut durch die Linse!</li>
+</ol></div>
+<div class="tablewrap"><table class="t" id="exT">
+<tr><th>Linse</th><th>g (mm)</th><th>b (mm)</th><th>G (mm)</th><th>B (mm)</th><th>B : G</th><th>b : g</th><th>1/g + 1/b</th><th>1/f</th></tr>
+</table></div>
+<p><button id="calcEx">🧮 Quotienten ausrechnen lassen</button> <span class="small">(erst, wenn ihr es selbst versucht habt)</span></p>
+<div class="box task"><b>Auswertung</b>
+<ol>
+<li>Stimmen B : G und b : g ungefähr überein?</li>
+<li>Stimmt 1/g + 1/b ungefähr mit 1/f überein? Wie groß sind die Abweichungen und woher kommen sie?</li>
+<li>Was habt ihr beobachtet, als die Linse näher als f am Gegenstand stand?</li>
+</ol>
+<textarea data-save="exA" placeholder="Auswertung …"></textarea></div>
+<p><button id="copy">📋 Ergebnisse kopieren</button></p>
+</section>
+</main>
+<footer>Station 6 · Lochkamera-Projekt Klasse 8</footer>
+

@@ -1,0 +1,124 @@
+</head><body>
+<div id="nojs" class="nojs">Wenn du diesen roten Hinweis siehst, laufen die Animationen nicht. Öffne die Datei bitte in Safari und nicht nur in der Vorschau. Frag sonst deine Lehrkraft.</div>
+<header><div class="in"><div class="kicker">Lochkamera · Station 1 von 6</div><h1>Warum ist das Bild unscharf?</h1>
+<p>Eure Lochkamera zeigt ein Bild. Aber es ist entweder <b>dunkel</b> oder <b>unscharf</b>. Hier findet ihr heraus, woran das liegt.</p></div></header>
+<main>
+
+<section class="card">
+<span class="step">Schritt 1</span>
+<h2>Von einem Punkt zum Lichtfleck</h2>
+<!--@3d-->
+<p>Jeder Punkt eines Gegenstands sendet Licht in alle Richtungen. Nur ein kleiner Teil davon kommt durch das Loch. Oben siehst du die Kamera als drehbares 3D-Modell, darunter das Bild auf dem Schirm.</p>
+<div id="v1"></div>
+<p class="cap">3D-Modell (maßstäblich, Lochkamera aufgeschnitten): Jeder leuchtende Punkt am Gegenstand schickt einen Lichtkegel durch das Loch. Auf dem Schirm entsteht ein Lichtfleck. Drehe das Modell mit dem Finger und schau auch von hinten auf den Schirm!</p>
+<div class="grid2 even">
+  <div class="screen screenbox"><canvas id="scr"></canvas><span class="tag">Schirm von hinten gesehen</span><p class="cap">So sieht man das Bild auf dem Schirm (12 cm × 9 cm).</p></div>
+  <div>
+<!--@2d-->
+<p>Jeder Punkt eines Gegenstands sendet Licht in alle Richtungen. Nur ein kleiner Teil davon kommt durch das Loch. Links siehst du die Kamera von der Seite, rechts das Bild auf dem Schirm.</p>
+<div class="grid2">
+  <div><canvas id="side"></canvas><p class="cap">Seitenansicht (nicht maßstäblich): Jeder farbige Punkt am Gegenstand schickt einen Lichtkegel durch das Loch.</p></div>
+  <div class="screen"><canvas id="scr"></canvas><p class="cap">So sieht man das Bild auf dem Schirm (12 cm × 9 cm).</p></div>
+</div>
+<!--@end-->
+<div class="ctls">
+  <div id="sD"></div>
+  <div id="sB"></div>
+</div>
+<div class="ctls">
+<!--@3d-->
+  <div><b>Leuchtpunkte am Gegenstand (3D-Modell)</b><div id="segPts"></div></div>
+<!--@2d-->
+  <div><b>Punkte am Gegenstand (Seitenansicht)</b><div id="segPts"></div></div>
+<!--@end-->
+  <div><b>Motiv auf dem Schirm</b><div id="segScene"></div></div>
+</div>
+<p><button class="primary" id="anim">▶ Loch langsam vergrößern</button></p>
+<div class="meters">
+  <div class="meter"><div class="lbl">Lichtfleck eines Punktes (Durchmesser)</div><div class="val" id="mD">–</div><div class="bar"><i id="barD" style="background:#e8590c"></i></div></div>
+  <div class="meter"><div class="lbl">Helligkeit (1-mm-Loch bei 10 cm = 1)</div><div class="val" id="mH">–</div><div class="bar"><i id="barH"></i></div></div>
+</div>
+
+<!--@3d-->
+</div>
+</div>
+<!--@2d-->
+<!--@end-->
+<div class="box task"><b>Aufgabe 1 – Ein Punkt</b>
+<ol>
+<li>Wähle „1 Punkt“. Mache das Loch klein, dann groß. Beschreibe, was mit dem Lichtfleck auf dem Schirm passiert.</li>
+<li>Verändere den Abstand <i>b</i> zwischen Loch und Schirm. Was passiert mit dem Lichtfleck?</li>
+</ol>
+<textarea data-save="a1" placeholder="Unsere Beobachtung …"></textarea>
+</div>
+</section>
+
+<section class="card">
+<span class="step">Schritt 2</span>
+<h2>Viele Punkte – die Flecken verschmelzen</h2>
+<div class="box task"><b>Aufgabe 2 – Viele Punkte</b>
+<ol>
+<li>Wähle oben „7 Punkte“ und drücke auf <b>▶ Loch langsam vergrößern</b>. Achte auf die farbigen Flecken am Schirm.</li>
+<li>Wähle das Motiv „Zwei Lämpchen“. Ab welchem Lochdurchmesser kannst du die beiden blauen Lämpchen nicht mehr getrennt sehen? Und die gelben?</li>
+</ol>
+<textarea data-save="a2" placeholder="Die blauen Lämpchen verschmelzen ab d ≈ … mm, die gelben ab …"></textarea>
+</div>
+<div class="box task" data-q="Tabelle Lochgröße"><b>Aufgabe 3 – Messreihe</b> (Motiv „Kerze“, b = 150 mm)
+<div class="tablewrap"><table class="t">
+<tr><th>Loch d</th><th>Lichtfleck D</th><th>Helligkeit</th><th>Bild scharf?</th></tr>
+<tr><td>0,5 mm</td><td><input data-save="t1D" inputmode="decimal"></td><td><input data-save="t1H" inputmode="decimal"></td><td><select data-save="t1s"><option></option><option>scharf</option><option>etwas unscharf</option><option>sehr unscharf</option></select></td></tr>
+<tr><td>1 mm</td><td><input data-save="t2D" inputmode="decimal"></td><td><input data-save="t2H" inputmode="decimal"></td><td><select data-save="t2s"><option></option><option>scharf</option><option>etwas unscharf</option><option>sehr unscharf</option></select></td></tr>
+<tr><td>2 mm</td><td><input data-save="t3D" inputmode="decimal"></td><td><input data-save="t3H" inputmode="decimal"></td><td><select data-save="t3s"><option></option><option>scharf</option><option>etwas unscharf</option><option>sehr unscharf</option></select></td></tr>
+<tr><td>5 mm</td><td><input data-save="t4D" inputmode="decimal"></td><td><input data-save="t4H" inputmode="decimal"></td><td><select data-save="t4s"><option></option><option>scharf</option><option>etwas unscharf</option><option>sehr unscharf</option></select></td></tr>
+<tr><td>10 mm</td><td><input data-save="t5D" inputmode="decimal"></td><td><input data-save="t5H" inputmode="decimal"></td><td><select data-save="t5s"><option></option><option>scharf</option><option>etwas unscharf</option><option>sehr unscharf</option></select></td></tr>
+</table></div>
+<p class="small">Tipp: Mit den Knöpfen − und + kannst du ganz genau einstellen.</p>
+</div>
+
+<details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
+<p>Jeder Punkt des Gegenstands erzeugt auf dem Schirm keinen Punkt, sondern einen <b>Lichtfleck</b> – ungefähr so groß wie das Loch (bei großem <i>b</i> etwas größer).</p>
+<p>Liegen die Flecken benachbarter Punkte übereinander, <b>verschmelzen</b> sie. Feine Einzelheiten verschwinden: Das Bild ist <b>unscharf</b>.</p>
+<p>Kleines Loch → kleine Flecken → scharf, aber wenig Licht → <b>dunkel</b>.<br>Großes Loch → viel Licht → <b>hell</b>, aber große Flecken → <b>unscharf</b>.</p>
+</div></details>
+</section>
+
+<section class="card" data-q="Ausprobieren Lochgröße">
+<span class="step">Schritt 3</span>
+<h2>Jetzt an der echten Lochkamera</h2>
+<div class="box try"><b>Ausprobieren</b>
+<ol>
+<li>Klebt Alufolie vor die Öffnung eurer Kamera. Stecht nacheinander verschieden große Löcher hinein: Stecknadel, dicke Nadel, Bleistiftspitze, Nagel.</li>
+<li>Richtet die Kamera auf ein helles Fenster oder eine Kerze (Raum abdunkeln!).</li>
+<li>Vergleicht Helligkeit und Schärfe. Passt das zur Simulation?</li>
+</ol></div>
+<div class="tablewrap"><table class="t">
+<tr><th>Loch gemacht mit …</th><th>ungefähre Größe</th><th>Helligkeit</th><th>Schärfe</th></tr>
+<tr><td>Stecknadel</td><td><input data-save="r1d"></td><td><input data-save="r1h"></td><td><input data-save="r1s"></td></tr>
+<tr><td>dicke Nadel</td><td><input data-save="r2d"></td><td><input data-save="r2h"></td><td><input data-save="r2s"></td></tr>
+<tr><td>Bleistift</td><td><input data-save="r3d"></td><td><input data-save="r3h"></td><td><input data-save="r3s"></td></tr>
+<tr><td>Nagel</td><td><input data-save="r4d"></td><td><input data-save="r4h"></td><td><input data-save="r4s"></td></tr>
+</table></div>
+</section>
+
+<section class="card">
+<span class="step">Schritt 4</span>
+<h2>Das Problem – und eine Idee</h2>
+<div class="box idea"><b>Das Dilemma</b>
+Wir wollen ein großes Loch (viel Licht, helles Bild) – aber trotzdem kleine Lichtflecken (scharfes Bild). Das scheint nicht zu gehen …</div>
+<div class="box task" data-q="Idee"><b>Denkaufgabe</b>
+<!--@3d-->
+Schau dir im 3D-Modell bei großem Loch und „1 Punkt“ die Lichtstrahlen an. Sie laufen hinter dem Loch auseinander.<br>
+<!--@2d-->
+Schau dir in der Seitenansicht bei großem Loch und „1 Punkt“ die Lichtstrahlen an. Sie laufen hinter dem Loch auseinander.<br>
+<!--@end-->
+<b>Was müsste mit den Lichtstrahlen eines Punktes passieren, damit sie auf dem Schirm wieder in einem einzigen Punkt ankommen?</b>
+<textarea data-save="idee" placeholder="Unsere Idee …"></textarea>
+</div>
+<details><summary>Tipp aufdecken</summary><div>
+<p>Die Strahlen müssten hinter dem Loch <b>umgelenkt</b> werden, sodass sie sich auf dem Schirm wieder treffen. Man sagt: Die Strahlen werden <b>gebündelt</b>. Wie das geht, entdeckt ihr in <b>Station 2</b>.</p>
+</div></details>
+<p><button id="copy">📋 Ergebnisse kopieren</button></p>
+</section>
+</main>
+<footer>Station 1 · Lochkamera-Projekt Klasse 8 · Weiter mit der Datei „2_Licht_buendeln.html“</footer>
+

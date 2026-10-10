@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Projekt Lochkamera</title>
+<style>:root{--bg:#f4f1ea;--card:#fff;--ink:#1d2230;--muted:#5d6577;--line:#e2dccf;--accent:#d9480f;--blue:#1971c2;--green:#2b8a3e;--orange:#e8590c;--violet:#7048e8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+header{background:#1d2230;color:#fff;padding:18px 16px 16px}
+header .in{max-width:1180px;margin:0 auto}
+header .kicker{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#ffc078;font-weight:700}
+header h1{margin:4px 0 4px;font-size:30px;line-height:1.2}
+header p{margin:0;color:#c9cfdb}
+main{max-width:1180px;margin:0 auto;padding:8px 16px 48px}
+h2{font-size:24px;margin:0 0 8px;line-height:1.25}
+h3{font-size:19px;margin:16px 0 6px}
+.card{background:var(--card);border-radius:18px;padding:18px 18px;margin:18px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.step{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;font-weight:700;font-size:15px;padding:2px 12px;margin-bottom:6px}
+.box{border-radius:14px;padding:12px 16px;margin:14px 0}
+.box>b:first-child{display:block;margin-bottom:2px}
+.task{background:#e7f1fc;border-left:6px solid var(--blue)}
+.try{background:#e6f6e9;border-left:6px solid var(--green)}
+.idea{background:#fff1e3;border-left:6px solid var(--orange)}
+.safety{background:#ffe9e9;border-left:6px solid #e03131}
+.task ol,.try ol,.idea ol,.task ul,.try ul{margin:6px 0 0;padding-left:22px}
+.task li,.try li{margin:4px 0}
+details{background:#f8f6f1;border-radius:14px;margin:12px 0;border:1px solid var(--line)}
+details>summary{cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;min-height:44px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▶";display:inline-block;margin-right:10px;font-size:13px;transition:transform .2s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>div{padding:0 16px 14px}
+.merke{background:#fff8db;border-color:#f5d76e}
+canvas{display:block;width:100%;border-radius:14px;background:#10131a;-webkit-user-select:none;user-select:none}
+.drag{touch-action:none}
+.screen canvas{image-rendering:auto}
+.cap{font-size:14px;color:var(--muted);margin:6px 2px 0}
+.grid2{display:grid;grid-template-columns:1fr;gap:16px}
+@media (min-width:860px){.grid2{grid-template-columns:3fr 2fr}.grid2.even{grid-template-columns:1fr 1fr}}
+.ctls{display:grid;grid-template-columns:1fr;gap:6px 22px;margin-top:12px}
+@media (min-width:700px){.ctls{grid-template-columns:1fr 1fr}}
+.ctl label{display:block;font-weight:600;font-size:16px;margin-bottom:-2px}
+.ctl .row{display:flex;align-items:center;gap:8px}
+.ctl output{min-width:92px;text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:44px;background:transparent;margin:0;min-width:60px}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:#d5d9e2}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;border-radius:50%;background:var(--accent);margin-top:-12px;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:#d5d9e2}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--accent);border:3px solid #fff}
+button{font:inherit;font-size:16px;border:0;border-radius:12px;min-height:44px;min-width:44px;padding:8px 14px;background:#e3e7ef;color:var(--ink);cursor:pointer;touch-action:manipulation}
+button:active{transform:scale(.97)}
+button.primary{background:var(--accent);color:#fff;font-weight:700}
+button.pm{width:44px;padding:0;font-size:24px;font-weight:700;line-height:1}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.seg button{background:#e3e7ef}
+.seg button.on{background:#1d2230;color:#fff;font-weight:700}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.meter{background:#f3f4f7;border-radius:12px;padding:8px 12px}
+.meter .lbl{font-size:14px;color:var(--muted)}
+.meter .val{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.meter .bar{height:10px;border-radius:5px;background:#dde1e8;margin-top:4px;overflow:hidden}
+.meter .bar i{display:block;height:100%;width:0;border-radius:5px;background:var(--green);transition:width .15s}
+table.t{border-collapse:collapse;width:100%;margin:8px 0;font-size:16px}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:middle}
+table.t th{background:#f3f0e8}
+table.t input,table.t select{font:inherit;font-size:16px;width:100%;min-width:60px;border:1px solid #c9cdd6;border-radius:8px;padding:8px;background:#fff}
+textarea{font:inherit;font-size:16px;width:100%;min-height:76px;border:1px solid #c9cdd6;border-radius:10px;padding:10px;background:#fff}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ok{color:var(--green);font-weight:700}.no{color:#c92a2a;font-weight:700}
+.chip{display:inline-block;border-radius:8px;padding:0 8px;font-weight:700;color:#fff;font-size:15px}
+.nojs{background:#c92a2a;color:#fff;padding:12px 16px;font-weight:700;text-align:center}
+.next{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.small{font-size:15px;color:var(--muted)}
+footer{max-width:1180px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:14px}
+
+footer.legal{padding-top:0;font-size:13px}
+footer.legal details{background:transparent;margin:6px 0}
+footer.legal details>summary{font-weight:600;color:var(--muted)}
+footer.legal p{margin:0 0 10px;line-height:1.45}
+
+.sets a{font-weight:600} .sets li{margin:6px 0}</style></head><body>
+<header><div class="in"><div class="kicker">Physik · Klasse 8</div><h1>Projekt: Die perfekte Lochkamera</h1>
+<p>Baut eine Lochkamera, die ein <b>helles</b> und gleichzeitig <b>scharfes</b> Bild liefert. Wählt eine Fassung und beginnt mit der Übersicht.</p></div></header>
+<main class="sets">
+<section class="card"><h2>Fassung mit 3D-Animationen</h2><p>Drehbare 3D-Szenen. Braucht ein aktuelles iPad (iPadOS 15 oder neuer).</p><ul><li><a href="lochkamera_3d/0_Uebersicht.html">Übersicht</a></li><li><a href="lochkamera_3d/1_Unschaerfe.html">Station 1: Unschärfe</a></li><li><a href="lochkamera_3d/2_Licht_buendeln.html">Station 2: Licht bündeln</a></li><li><a href="lochkamera_3d/3_Licht_durch_Glas.html">Station 3: Licht durch Glas</a></li><li><a href="lochkamera_3d/4_Brechung.html">Station 4: Brechung</a></li><li><a href="lochkamera_3d/5_Experimente.html">Station 5: Experimente</a></li><li><a href="lochkamera_3d/6_Bildentstehung.html">Station 6: Bildentstehung</a></li></ul></section>
+<section class="card"><h2>Einfache Fassung (2D)</h2><p>Läuft auch auf älteren Geräten.</p><ul><li><a href="lochkamera/0_Uebersicht.html">Übersicht</a></li><li><a href="lochkamera/1_Unschaerfe.html">Station 1: Unschärfe</a></li><li><a href="lochkamera/2_Licht_buendeln.html">Station 2: Licht bündeln</a></li><li><a href="lochkamera/3_Licht_durch_Glas.html">Station 3: Licht durch Glas</a></li><li><a href="lochkamera/4_Brechung.html">Station 4: Brechung</a></li><li><a href="lochkamera/5_Experimente.html">Station 5: Experimente</a></li><li><a href="lochkamera/6_Bildentstehung.html">Station 6: Bildentstehung</a></li></ul></section>
+<section class="card"><h2>Offline nutzen</h2><p>Jede Datei funktioniert auch einzeln ohne Internet. Ihr könnt sie herunterladen und auf dem iPad öffnen.</p></section>
+</main>
+<footer class="legal">
+<details><summary>Impressum</summary><div>
+<p><b>Angaben gemäß § 5 DDG</b><br>Thomas Vieth<br>Kaiserin Augusta Schule<br>Georgstr. 10<br>50676 Köln</p>
+<p><b>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</b> Thomas Vieth, Anschrift wie oben.</p>
+<p>Diese Seite ist Unterrichtsmaterial für den Physikunterricht. Sie verfolgt keine kommerziellen Zwecke.</p>
+</div></details>
+<details><summary>Datenschutzerklärung</summary><div>
+<p><b>Verantwortlicher</b><br>Thomas Vieth, Kaiserin Augusta Schule, Georgstr. 10, 50676 Köln</p>
+<p><b>Kurz gesagt</b><br>Diese Seite sammelt keine personenbezogenen Daten. Es gibt keine Anmeldung, keine Cookies, keine Statistik- oder Tracking-Werkzeuge, keine Werbung und keine eingebundenen Inhalte von anderen Servern (keine Schriften, Bibliotheken oder Videos aus dem Internet). Alles, was die Seite braucht, steckt in dieser einen Datei.</p>
+<p><b>Hosting bei GitHub Pages</b><br>Wenn du die Seite im Internet aufrufst, wird sie von GitHub Pages ausgeliefert, einem Dienst der GitHub Inc. (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, insbesondere deine IP-Adresse, Datum und Uhrzeit, die aufgerufene Datei sowie Browser- und Betriebssystemangaben. GitHub speichert diese Daten in Server-Protokollen, um den Dienst sicher und stabil zu betreiben. Rechtsgrundlage ist Art. 6 Abs. 1 lit. e und f DSGVO (Bereitstellung von Unterrichtsmaterial; sicherer Betrieb der Website). Dabei können Daten in die USA übermittelt werden. GitHub ist unter dem EU-US Data Privacy Framework zertifiziert (Art. 45 DSGVO). Näheres: GitHub Privacy Statement unter docs.github.com/site-policy/privacy-policies/github-general-privacy-statement.</p>
+<p>Lädst du die Datei herunter und öffnest sie auf deinem Gerät, findet überhaupt keine Datenübertragung statt.</p>
+<p><b>Speicherung deiner Eingaben auf deinem Gerät</b><br>Antworten, Messwerte und Einstellungen, die du in die Felder einträgst, speichert die Seite im lokalen Speicher deines Browsers (localStorage). So sind sie beim nächsten Öffnen wieder da. Diese Daten bleiben ausschließlich auf deinem Gerät und werden nie an den Verantwortlichen oder an GitHub gesendet. Du kannst sie jederzeit löschen, indem du die Felder leerst oder die Website-Daten in den Einstellungen deines Browsers löschst. Der Knopf „Ergebnisse kopieren“ legt deine Antworten nur in die Zwischenablage deines Geräts.</p>
+<p><b>Deine Rechte</b><br>Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18) und Widerspruch (Art. 21). Wende dich dazu an den Verantwortlichen unter der oben genannten Anschrift. Du kannst dich außerdem bei einer Datenschutz-Aufsichtsbehörde beschweren, zum Beispiel bei der Landesbeauftragten für Datenschutz und Informationsfreiheit Nordrhein-Westfalen (Kavalleriestr. 2–4, 40213 Düsseldorf).</p>
+<p>Stand: Oktober 2026</p>
+</div></details>
+</footer>
+
+</body></html>
