@@ -18,26 +18,32 @@
 <!--@2d-->
   <div><canvas id="cvA" class="drag"></canvas><p class="cap">Winkelscheibe: oben Luft, unten das Material. Ziehe die Lampe!</p></div>
 <!--@end-->
-  <div>
+  <div id="ctlA">
     <div id="sAlpha"></div>
     <b>Material</b><div id="segMat"></div>
     <b>Licht kommt …</b><div id="segDir"></div>
-    <b>Anzeige</b><div class="seg"><button id="btnNum" class="on">Winkel anzeigen</button></div>
+    <b>Anzeige</b><div class="seg"><button id="btnNum"></button></div>
     <div class="meters" style="grid-template-columns:1fr 1fr">
       <div class="meter"><div class="lbl">Einfallswinkel α</div><div class="val" id="mA">–</div></div>
       <div class="meter"><div class="lbl">Brechungswinkel β</div><div class="val" id="mB">–</div></div>
     </div>
+    <p><button class="primary" id="sweepA">▶ α von 0° bis 89° durchfahren</button></p>
   </div>
 </div>
-<div class="box task" data-q="Brechung Luft-Glas (Simulation)"><b>Aufgabe 1 – Messreihe in der Simulation</b> (Material: Glas, Licht kommt aus der Luft)
+<div class="chartbox"><canvas id="chartAB"></canvas></div>
+<p class="cap">Diagramm: Brechungswinkel β über dem Einfallswinkel α. Die Kurve wächst mit, wenn du α veränderst oder durchfahren lässt. Grau gestrichelt: β = α (keine Brechung).</p>
+<div class="hint"><b>Brechzahl n:</b> Sie gibt an, wie stark ein Stoff das Licht bricht. Luft 1,00 · Wasser 1,33 · Glas 1,50 · Diamant 2,42. Je größer <i>n</i>, desto stärker knickt das Licht beim Eintritt zum Lot hin.</div>
+<div class="box task" data-q="Brechung Luft-Glas (Simulation)"><b>Aufgabe 1 – Messreihe in der Simulation</b> (Licht kommt aus der Luft)
 <div class="tablewrap"><table class="t">
 <tr><th>Einfallswinkel α</th><th>0°</th><th>20°</th><th>40°</th><th>60°</th><th>80°</th></tr>
-<tr><td>Brechungswinkel β</td><td><input data-save="b0" inputmode="decimal"></td><td><input data-save="b20" inputmode="decimal"></td><td><input data-save="b40" inputmode="decimal"></td><td><input data-save="b60" inputmode="decimal"></td><td><input data-save="b80" inputmode="decimal"></td></tr>
+<tr><td>β bei Glas</td><td><input data-save="b0" inputmode="decimal"></td><td><input data-save="b20" inputmode="decimal"></td><td><input data-save="b40" inputmode="decimal"></td><td><input data-save="b60" inputmode="decimal"></td><td><input data-save="b80" inputmode="decimal"></td></tr>
+<tr><td>β bei Wasser</td><td><input data-save="w0" inputmode="decimal"></td><td><input data-save="w20" inputmode="decimal"></td><td><input data-save="w40" inputmode="decimal"></td><td><input data-save="w60" inputmode="decimal"></td><td><input data-save="w80" inputmode="decimal"></td></tr>
+<tr><td>β bei Diamant</td><td><input data-save="m0" inputmode="decimal"></td><td><input data-save="m20" inputmode="decimal"></td><td><input data-save="m40" inputmode="decimal"></td><td><input data-save="m60" inputmode="decimal"></td><td><input data-save="m80" inputmode="decimal"></td></tr>
 </table></div>
 <ol>
 <li>Was passiert, wenn das Licht genau senkrecht (α = 0°) auf das Glas trifft?</li>
 <li>Ist β größer oder kleiner als α? Wird das Licht zum Lot hin oder vom Lot weg geknickt?</li>
-<li>Vergleiche Wasser, Glas und Diamant.</li>
+<li>Vergleiche Wasser, Glas und Diamant. Was hat das mit der Brechzahl <i>n</i> zu tun?</li>
 <li>Stelle „aus dem Material“ ein. Was ist jetzt anders? Was passiert bei großen Winkeln?</li>
 </ol>
 <textarea data-save="a1" placeholder="Unsere Beobachtungen …"></textarea>
@@ -47,10 +53,12 @@
 <p>Im Glas ist Licht langsamer als in Luft. Stell dir eine Reihe Läufer vor, die nebeneinander schräg vom Asphalt auf eine Sandfläche laufen. Wer zuerst im Sand ist, wird zuerst langsamer – die Reihe dreht sich. So ändert sich die Laufrichtung.</p>
 <!--@3d-->
 <div id="vW"></div>
-<p class="cap">Die hellen Kämme sind Wellenberge des Lichts – hier als Wasserwellen-Modell in 3D. Sie stehen senkrecht zur Laufrichtung. Im Material sind sie langsamer und enger zusammen. Einfallswinkel und Material stellst du oben ein.</p>
+<p class="cap">Die hellen Kämme sind Wellenberge des Lichts – hier als Wasserwellen-Modell in 3D. Sie stehen senkrecht zur Laufrichtung. Im Material sind sie langsamer und enger zusammen. Bei Totalreflexion laufen sie zurück. Einfallswinkel und Material stellst du oben ein.</p>
+<p><button id="wavePause">⏸ Wellen anhalten</button></p>
 <!--@2d-->
 <canvas id="cvW"></canvas>
-<p class="cap">Die hellen Streifen sind Wellenberge des Lichts. Sie stehen senkrecht zur Laufrichtung. Im Material sind sie langsamer und enger zusammen. Einfallswinkel und Material stellst du oben ein.</p>
+<p class="cap">Die hellen Streifen sind Wellenberge des Lichts. Sie stehen senkrecht zur Laufrichtung. Im Material sind sie langsamer und enger zusammen. Bei Totalreflexion laufen sie zurück. Einfallswinkel und Material stellst du oben ein.</p>
+<p><button id="wavePause">⏸ Wellen anhalten</button></p>
 <!--@end-->
 </div></details>
 
@@ -79,11 +87,15 @@
 <canvas id="cvB" class="drag"></canvas>
 <!--@end-->
 <p class="cap">Ein Kästchen im Raster = 1 cm (Modell). Die gestrichelte Linie ist die Mittelachse.</p>
+<div id="ctlB">
+<p id="focusInfo" class="hint" style="margin-top:0"></p>
 <div class="ctls">
   <div><b>Lichtquelle</b><div id="segBeam"></div></div>
+  <div><b>Strahlen</b><div class="seg"><button id="btnEdge"></button></div></div>
   <div id="sAng"></div>
   <div id="sN"></div>
   <div id="sR"></div>
+</div>
 </div>
 
 <div class="box task" data-q="Glaskörper"><b>Aufgabe 2 – Entdeckt, was Glaskörper mit Licht machen</b>
@@ -91,7 +103,9 @@
 <li><b>Glasquader:</b> Stelle das Licht schräg ein. Vergleiche die Richtung vor und hinter dem Quader.</li>
 <li><b>Prisma:</b> In welche Richtung wird das Licht abgelenkt – zur Spitze oder zur dicken Seite?</li>
 <li><b>Linse aus Prismen:</b> Hier liegen Prismen übereinander, oben und unten anders herum. Wohin lenken sie das Licht?</li>
-<li><b>Sammellinse:</b> Wo treffen sich die Strahlen? Verändere die Wölbung. Was passiert mit dem Treffpunkt (Brennpunkt)?</li>
+<li><b>Sammellinse:</b> Nimm paralleles Licht mit der Richtung 0°. Wo treffen sich die Strahlen? Dieser Punkt heißt <b>Brennpunkt F</b>. Verändere die Wölbung. Was passiert mit dem Brennpunkt?</li>
+<li>Schalte „Randstrahlen zeigen“ ein. Treffen sich jetzt wirklich alle Strahlen in einem Punkt?</li>
+<li><b>Punktlampe:</b> Wo treffen sich jetzt die Strahlen? (Das ist kein Brennpunkt, sondern der <b>Bildpunkt</b> der Lampe.)</li>
 <li>Stelle die Brechzahl auf <b>n = 1,00</b> (Glas verhält sich wie Luft). Was macht die Linse jetzt?</li>
 <li><b>Zerstreuungslinse:</b> Erkläre, warum ihr mit E und F kein scharfes Bild bekommen habt.</li>
 </ol>
@@ -103,12 +117,19 @@
 <textarea data-save="a3" placeholder="Linse … ist stärker gewölbt, weil …"></textarea>
 </div>
 
+<details><summary>Für Profis: Weißes Licht durch ein Prisma</summary><div>
+<p>Wähle das Prisma und als Lichtquelle „weißes Licht“. Was siehst du hinter dem Prisma? Welche Farbe wird am stärksten abgelenkt? Probiere auch die Sammellinse mit weißem Licht.</p>
+<p class="small">Die Farbaufspaltung ist in der Simulation etwa dreifach verstärkt, damit man sie gut sieht.</p>
+<textarea data-save="profi" placeholder="Hinter dem Prisma …"></textarea>
+</div></details>
+
 <details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
 <ul>
 <li>Ein <b>Prisma</b> lenkt Licht zu seiner dicken Seite hin ab.</li>
-<li>Eine <b>Sammellinse</b> ist in der Mitte dick und am Rand dünn – wie viele Prismen, deren dicke Seite zur Mitte zeigt. Darum werden alle Strahlen zur Mitte hin gelenkt und treffen sich im <b>Brennpunkt</b>.</li>
+<li>Eine <b>Sammellinse</b> ist in der Mitte dick und am Rand dünn – wie viele Prismen, deren dicke Seite zur Mitte zeigt. Darum werden die Strahlen zur Mitte hin gelenkt. Paralleles Licht nahe der Achse trifft sich im <b>Brennpunkt F</b>. Der Abstand von der Linse zum Brennpunkt ist die <b>Brennweite f</b>.</li>
+<li>Strahlen ganz am Rand werden etwas zu stark gebrochen und treffen sich ein Stück vor F. Das ist ein <b>Linsenfehler</b>. Deshalb nutzt man eine Blende, wenn das Bild besonders scharf sein soll.</li>
 <li>Je stärker die Linse gewölbt ist, desto stärker wird gebrochen und desto <b>kleiner ist die Brennweite</b>.</li>
-<li>Eine <b>Zerstreuungslinse</b> ist am Rand dick. Sie lenkt das Licht von der Mitte weg.</li>
+<li>Eine <b>Zerstreuungslinse</b> ist am Rand dick. Sie lenkt das Licht von der Mitte weg. Auf dem Schirm entsteht kein Bild.</li>
 <li>Ohne Brechung (n = 1) hätte eine Linse keine Wirkung.</li>
 </ul>
 </div></details>
