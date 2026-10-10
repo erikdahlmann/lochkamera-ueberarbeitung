@@ -21,7 +21,7 @@ Hinweise zur Umsetzung:
 - Station 6: Die alte Antwort aus „Aufgabe 2/3“ (gemeinsamer Speicher „a2“) bleibt bei Aufgabe 2. Aufgabe 3 hat ein neues, leeres Feld.
 - Der Abschluss-Text aus Station 5 wird beim ersten Öffnen von Station 6 automatisch übernommen.
 - Die Helligkeit der Schirmbilder ist jetzt in Station 0, 1 und 2 gleich geeicht. Kleine Löcher ergeben deshalb wirklich dunkle Bilder.
-- Die Lupe in Station 6 (Linse verschieben) und die Draufsicht ohne Perspektive sind neu; Drehen ist in der Draufsicht gesperrt, „↺ Start“ hebt das auf.
+- Neu sind das Verschieben der Linse in Station 6 und die Draufsicht ohne Perspektive (Station 1, 3, 4); Drehen ist in der Draufsicht gesperrt, „↺ Start“ hebt das auf.
 
 
 ---
