@@ -196,7 +196,7 @@ View3D.prototype.render=function(){if(this.beforeRender)this.beforeRender();this
 View3D.prototype.fitOrtho=function(){var c=this.ortho,s=this.orthoSize||100,a=this.persp.aspect||1.6;c.left=-s*a;c.right=s*a;c.top=s;c.bottom=-s;c.updateProjectionMatrix();};
 /* Draufsicht ohne Perspektive (zum Ablesen von Winkeln); Drehen ist dann gesperrt */
 View3D.prototype.setOrtho=function(p){var pos=typeof p.pos==='function'?p.pos():p.pos,tg=typeof p.target==='function'?p.target():p.target;
-  this.orthoOn=true;this.orthoSize=p.size||100;var c=this.ortho;c.position.set(pos[0],pos[1],pos[2]);c.up.set(0,0,-1);c.lookAt(tg[0],tg[1],tg[2]);
+  this.orthoOn=true;this.orthoSize=typeof p.size==='function'?p.size():(p.size||100);var c=this.ortho;c.position.set(pos[0],pos[1],pos[2]);c.up.set(0,0,-1);c.lookAt(tg[0],tg[1],tg[2]);
   this.fitOrtho();this.camera=c;this.controls.enabled=false;this._tween=null;this.note('Draufsicht zum Messen · „↺ Start“ zum Drehen',2600);this.dirty=true;};
 View3D.prototype.goTo=function(p){if(p.ortho)return this.setOrtho(p);
   if(this.orthoOn){this.orthoOn=false;this.camera=this.persp;this.controls.enabled=true;}
@@ -227,7 +227,7 @@ function benchTex(){if(_benchTex)return _benchTex;var R=rng(3);_benchTex=canvasT
 function tableTex(){var t=benchTex().clone();t.needsUpdate=true;return t;}
 function makeTable(w,d,y,o){o=o||{};var g=new T3.Group();
   var t=tableTex();t.repeat.set(w/600,d/600);
-  var top=new T3.Mesh(new T3.BoxGeometry(w,24,d),[stdMat(0x2a2d33,0.6),stdMat(0x2a2d33,0.6),stdMat(0xffffff,0.78,0,{map:t}),stdMat(0x2a2d33,0.6),stdMat(0x3a3f48,0.5),stdMat(0x3a3f48,0.5)]);
+  var top=new T3.Mesh(new T3.BoxGeometry(w,24,d),[stdMat(0x2a2d33,0.6),stdMat(0x2a2d33,0.6),stdMat(0x7d838e,0.82,0,{map:t}),stdMat(0x2a2d33,0.6),stdMat(0x3a3f48,0.5),stdMat(0x3a3f48,0.5)]);
   top.position.y=y-12;top.receiveShadow=true;g.add(top);
   /* helle Kantenleiste */
   var edgeM=stdMat(0x9aa3b0,0.35,0.6);[[0,d/2+3,w+6,6],[0,-d/2-3,w+6,6]].forEach(function(q){var m=new T3.Mesh(new T3.BoxGeometry(q[2],26,q[3]),edgeM);m.position.set(q[0],y-12,q[1]);g.add(m);});
@@ -250,7 +250,7 @@ function makeGrid(w,d,step,c1,c2){var pts=[],x,z;for(x=-w/2;x<=w/2+1e-6;x+=step)
 function chalkBoardTex(){return canvasTex(2048,700,function(c,w,h){
   var g=c.createLinearGradient(0,0,w,h);g.addColorStop(0,'#203a2e');g.addColorStop(1,'#18301f');c.fillStyle=g;c.fillRect(0,0,w,h);
   var R=rng(21);for(var i=0;i<260;i++){c.fillStyle='rgba(255,255,255,'+(R()*0.035)+')';c.beginPath();c.ellipse(R()*w,R()*h,40+R()*160,8+R()*30,R()*3,0,7);c.fill();}
-  c.strokeStyle='rgba(240,240,230,.85)';c.fillStyle='rgba(240,240,230,.88)';c.lineWidth=5;c.lineCap='round';c.lineJoin='round';
+  c.strokeStyle='rgba(240,240,230,.7)';c.fillStyle='rgba(240,240,230,.72)';c.lineWidth=5;c.lineCap='round';c.lineJoin='round';
   c.font='bold 64px "Chalkboard SE","Comic Sans MS","Segoe Print",sans-serif';c.fillText('Optik',70,100);
   c.font='46px "Chalkboard SE","Comic Sans MS","Segoe Print",sans-serif';
   /* Lochkamera-Skizze */
@@ -286,7 +286,7 @@ function clockTex(){return canvasTex(256,256,function(c,w){c.fillStyle='#f8f9fa'
 function floorTex(){var t=canvasTex(512,512,function(c,w){c.fillStyle='#3a3f47';c.fillRect(0,0,w,w);var R=rng(5);
   for(var i=0;i<3000;i++){var v=Math.floor(48+R()*30);c.fillStyle='rgba('+v+','+(v+3)+','+(v+6)+',.35)';c.fillRect(R()*w,R()*w,2,2);}
   c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=3;c.strokeRect(0,0,w,w);});t.wrapS=t.wrapT=T3.RepeatWrapping;return t;}
-function wallTex(){var t=canvasTex(512,512,function(c,w){c.fillStyle='#8c8f8a';c.fillRect(0,0,w,w);var R=rng(8);
+function wallTex(){var t=canvasTex(512,512,function(c,w){c.fillStyle='#767a78';c.fillRect(0,0,w,w);var R=rng(8);
   for(var i=0;i<5000;i++){var v=Math.floor(120+R()*40);c.fillStyle='rgba('+v+','+v+','+(v-6)+',.08)';c.fillRect(R()*w,R()*w,3,3);}});t.wrapS=t.wrapT=T3.RepeatWrapping;return t;}
 function makeLabRoom(scene,o){
   var G=new T3.Group();G.name='raum';scene.add(G);
@@ -304,7 +304,7 @@ function makeLabRoom(scene,o){
   for(var i=-1;i<=1;i+=2)for(var k=-1;k<=1;k+=2){var lp=new T3.Mesh(new T3.BoxGeometry(1200,30,300),new T3.MeshStandardMaterial({color:0xdfe3ea,emissive:0x8090a0,emissiveIntensity:0.25,roughness:0.5}));lp.position.set(cx+i*W*0.22,top-20,cz+k*D*0.2);G.add(lp);}
   /* Tafel an der Rückwand */
   var bw=Math.min(4400,W*0.42),bhh=bw*700/2048;
-  var board=new T3.Mesh(new T3.PlaneGeometry(bw,bhh),stdMat(0xffffff,0.9,0,{map:chalkBoardTex(),emissive:0xffffff,emissiveIntensity:0.0}));board.position.set(cx-W*0.08,fy+950+bhh/2,cz-D/2+8);G.add(board);
+  var board=new T3.Mesh(new T3.PlaneGeometry(bw,bhh),stdMat(0xffffff,0.9,0,{map:chalkBoardTex()}));board.position.set(cx-W*0.08,fy+950+bhh/2,cz-D/2+8);G.add(board);
   var frM=stdMat(0xb8bec8,0.35,0.8);[[0,bhh/2+15,bw+60,30],[0,-bhh/2-15,bw+60,30],[bw/2+15,0,30,bhh],[-bw/2-15,0,30,bhh]].forEach(function(q){var f=new T3.Mesh(new T3.BoxGeometry(q[2],q[3],24),frM);f.position.set(board.position.x+q[0],board.position.y+q[1],board.position.z+4);G.add(f);});
   var tray=new T3.Mesh(new T3.BoxGeometry(bw,20,90),frM);tray.position.set(board.position.x,board.position.y-bhh/2-40,board.position.z+45);G.add(tray);
   for(var c2=0;c2<4;c2++){var ch=new T3.Mesh(new T3.CylinderGeometry(7,7,80,8),stdMat([0xffffff,0xffd43b,0xff8787,0x74c0fc][c2],0.9));ch.rotation.z=Math.PI/2;ch.position.set(tray.position.x-bw*0.3+c2*120,tray.position.y+17,tray.position.z);G.add(ch);}
@@ -551,15 +551,24 @@ function candleScene(g,G,footY){var s=new T3.Scene();var c=makeCandle(G,{});c.po
   var tb=new T3.Mesh(new T3.PlaneGeometry(6000,6000),stdMat(0x5a4636,0.75));tb.rotation.x=-Math.PI/2;tb.position.set(-g,footY-3,0);tb.receiveShadow=true;s.add(tb);
   var wall=new T3.Mesh(new T3.PlaneGeometry(8000,6000),stdMat(0x6a6f7a,0.95));wall.rotation.y=Math.PI/2;wall.position.set(-g-700,0,0);s.add(wall);
   s.add(new T3.AmbientLight(0x6070a0,0.06));s.userData.candle=c;return s;}
-function lampsScene(g,k){var s=new T3.Scene();
+/* Zwei gelbe und zwei blaue Lämpchen; lay = [x gelb, y gelb, x blau, y blau] in Einheiten von k */
+var LAMPS_STD=[22,10,6,-22];
+function lampsScene(g,k,lay){var s=new T3.Scene();lay=lay||LAMPS_STD;
   var board=new T3.Mesh(new T3.PlaneGeometry(220*k,150*k),stdMat(0x1b1d22,0.6));board.rotation.y=Math.PI/2;board.position.set(-g-6*k,0,0);s.add(board);
-  [[22,10,6,[1,0.78,0.22]],[-22,10,6,[1,0.78,0.22]],[6,-22,4,[0.35,0.68,1]],[-6,-22,4,[0.35,0.68,1]]].forEach(function(L){
+  [[lay[0],lay[1],6,[1,0.78,0.22]],[-lay[0],lay[1],6,[1,0.78,0.22]],[lay[2],lay[3],4,[0.35,0.68,1]],[-lay[2],lay[3],4,[0.35,0.68,1]]].forEach(function(L){
     var x=-g,y=L[1]*k,z=-L[0]*k,r=L[2]*k*0.42,c=L[3];
     var bulb=new T3.Mesh(new T3.SphereGeometry(r,24,16),new T3.MeshBasicMaterial({color:new T3.Color(c[0]*7,c[1]*7,c[2]*7)}));bulb.position.set(x,y,z);s.add(bulb);
     var gl=glowSprite(c,r*5,1.2);gl.position.set(x+r,y,z);s.add(gl);
     var sock=new T3.Mesh(new T3.CylinderGeometry(r*0.8,r*0.8,4*k,20),stdMat(0x8a8f99,0.4,0.8));sock.rotation.z=Math.PI/2;sock.position.set(x-r-1*k,y,z);s.add(sock);
     var pl=new T3.PointLight(new T3.Color(c[0],c[1],c[2]),k*k*900,0,2);pl.position.set(x+r*2,y,z);s.add(pl);});
   s.add(new T3.AmbientLight(0xffffff,0.02));return s;}
+/* Leiste mit farbigen Leuchtpunkten (wie im 3D-Modell von Station 1) */
+function ledsScene(g,pts){var s=new T3.Scene();
+  var board=new T3.Mesh(new T3.BoxGeometry(6,170,40),stdMat(0x20232b,0.5,0.3));board.position.set(-g-6,0,0);s.add(board);
+  pts.forEach(function(p){var m=ledMesh(p.col,3.2);m.position.set(-g,p.y,0);s.add(m);});
+  s.add(new T3.AmbientLight(0xffffff,0.03));return s;}
+/* Motiv verschiebbar: Alles wandert in eine Gruppe; setG(g) stellt den Abstand ein */
+function shiftable(s,g0){var grp=new T3.Group();while(s.children.length)grp.add(s.children[0]);s.add(grp);s.userData.setG=function(g){grp.position.x=g0-g;};return s;}
 /* Leuchtpunkt (LED) für 3D-Modelle */
 function ledMesh(hex,r){var c=lin(hex),g=new T3.Group();
   var m=new T3.Mesh(new T3.SphereGeometry(r,20,14),new T3.MeshBasicMaterial({color:new T3.Color(c[0]*3,c[1]*3,c[2]*3)}));g.add(m);

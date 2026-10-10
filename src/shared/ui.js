@@ -140,6 +140,13 @@ var SCENES={
     c.fillStyle='#333';c.fillRect(-1,20,2,8);
     var g=c.createRadialGradient(0,42,2,0,40,22);g.addColorStop(0,'#fff');g.addColorStop(.35,'#ffe066');g.addColorStop(.75,'#ff922b');g.addColorStop(1,'rgba(255,100,0,0)');
     c.fillStyle=g;c.beginPath();c.ellipse(0,42,11,22,0,0,7);c.fill();}},
+  /* Station 1: Lämpchen enger zusammen (gelb ±16 mm, blau ±4,8 mm) */
+  lampen1:{name:'Zwei Lämpchen',h:60,draw:function(c){
+    function lamp(x,y,r,col){var g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,'#fff');g.addColorStop(.5,col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,7);c.fill();}
+    lamp(-16,16,4,'#ffd43b');lamp(16,16,4,'#ffd43b');lamp(-4.8,-22.4,2.7,'#74c0fc');lamp(4.8,-22.4,2.7,'#74c0fc');}},
+  /* Leuchtpunkte wie im Modell; pts wird von der Seite gesetzt */
+  punkte:{name:'Leuchtpunkte',h:140,pts:[],draw:function(c){
+    SCENES.punkte.pts.forEach(function(p){var g=c.createRadialGradient(0,p.y,0,0,p.y,5);g.addColorStop(0,'#fff');g.addColorStop(.45,p.col);g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.beginPath();c.arc(0,p.y,5,0,7);c.fill();});}},
   haus:{name:'Haus',h:120,draw:function(c){
     c.fillStyle='#4dabf7';c.fillRect(-3000,-10,6000,3000);
     c.fillStyle='#ffe066';c.beginPath();c.arc(55,55,13,0,7);c.fill();
