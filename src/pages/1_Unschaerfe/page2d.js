@@ -13,7 +13,7 @@ function spot(){var D=spotGeo();if(st.beug){var A=airyDiameter(st.d,st.b);D=Math
 var side=new HiCanvas($('#side'),16/10,function(c,w,h){
   drawSideView(c,w,h,{g:st.g,b:st.b,d:st.d,f:null,pts:pts(),ySpan:78,bMax:320,nRays:2,lens:null,maxLeft:0.6});
 });
-var scr=new ScreenSim($('#scr'),240,176);
+var scr=new ScreenSim($('#scr'),240,176);scr.exposure=0.05; // gleiche Belichtung wie Station 2
 $('#scr').style.aspectRatio='15/11';
 var pend=false;
 function renderScreen(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;

@@ -198,19 +198,20 @@ function drawSideView(c,w,h,o){
   var ys2=o.pts.map(function(p){return p.y;}),top=Math.max.apply(null,ys2),bot=Math.min.apply(null,ys2);
   if(o.pts.length>1){c.strokeStyle='rgba(255,255,255,.6)';c.lineWidth=3;c.beginPath();c.moveTo(X(-o.g),Y(bot));c.lineTo(X(-o.g),Y(top));c.stroke();}
   o.pts.forEach(function(p){c.fillStyle=p.col;c.beginPath();c.arc(X(-o.g),Y(p.y),5,0,7);c.fill();});
-  // Wand mit Loch / Blende
-  c.fillStyle='#868e96';var wt=8;
-  c.fillRect(xL-wt/2,0,wt,Y(d/2));c.fillRect(xL-wt/2,Y(-d/2),wt,h-Y(-d/2));
+  // Wand mit Loch; mit Linse: Öffnung so groß wie die Linse, davor die Blende mit Öffnung d
+  c.fillStyle='#868e96';var wt=8,hole=(o.lensD&&o.f)?Math.max(o.lensD,d):d;
+  c.fillRect(xL-wt/2,0,wt,Y(hole/2));c.fillRect(xL-wt/2,Y(-hole/2),wt,h-Y(-hole/2));
+  if(o.lensD&&o.f&&d<o.lensD){c.fillStyle='#2b2f36';c.fillRect(xL-wt-4,Y(o.lensD/2),5,Y(d/2)-Y(o.lensD/2));c.fillRect(xL-wt-4,Y(-d/2),5,Y(-o.lensD/2)-Y(-d/2));}
   if(o.lens==='box'){c.fillStyle='rgba(255,212,59,.25)';c.strokeStyle='#ffd43b';c.lineWidth=2;var bh=Y(-d/2)-Y(d/2);c.fillRect(xL-14,Y(d/2),28,bh);c.strokeRect(xL-14,Y(d/2),28,bh);
     c.fillStyle='#ffd43b';c.font='bold 22px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('?',xL,h/2);}
-  else if(o.lens==='lens'&&P!==0){var half=Y(-d/2)-h/2,bulge=clamp(Math.abs(P)*900,3,16);
+  else if(o.lens==='lens'&&P!==0){var half=Y(-(o.lensD||d)/2)-h/2,bulge=clamp(Math.abs(P)*900,3,16);
     c.fillStyle='rgba(165,216,255,.35)';c.strokeStyle='#a5d8ff';c.lineWidth=2;c.beginPath();
     if(P>0){c.moveTo(xL,h/2-half);c.quadraticCurveTo(xL+bulge*2,h/2,xL,h/2+half);c.quadraticCurveTo(xL-bulge*2,h/2,xL,h/2-half);}
     else{var e=bulge;c.moveTo(xL-e,h/2-half);c.lineTo(xL+e,h/2-half);c.quadraticCurveTo(xL,h/2,xL+e,h/2+half);c.lineTo(xL-e,h/2+half);c.quadraticCurveTo(xL,h/2,xL-e,h/2-half);}
     c.closePath();c.fill();c.stroke();}
   // Schirm
   c.fillStyle='#e9ecef';c.fillRect(X(b)-2,h*0.04,4,h*0.92);
-  c.fillStyle='rgba(255,255,255,.75)';c.font='13px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='top';
+  c.fillStyle='rgba(255,255,255,.85)';c.font='bold 14px -apple-system,sans-serif';c.textAlign='center';c.textBaseline='top';
   c.fillText('Gegenstand',X(-o.g)+10,4);c.fillText(o.f||o.lens==='box'?'Linse':'Loch',xL,4);c.fillText('Schirm',X(b),4);
   c.textBaseline='bottom';c.fillText('b = '+fmtLen(b),(xL+X(b))/2,h-4);
   c.fillText('g = '+fmtLen(o.g),(X(-o.g)+xL)/2,h-4);

@@ -12,7 +12,7 @@ function spotGeo(){return blurDiameter(st.d,st.b,gEff(),null);}
 function spot(){var D=spotGeo();if(st.beug){var A=airyDiameter(st.d,st.b);D=Math.sqrt(D*D+A*A);}return D;}
 /* ---------- 3D-Modell ---------- */
 var tableY=-68;
-var v=new View3D($('#v1'),{shadows:true,pos:[-60,230,560],target:[-110,-5,0],near:2,far:30000,maxDist:3000,ctl:'#ctl1',
+var v=new View3D($('#v1'),{shadows:true,pos:[-40,110,600],target:[-150,15,0],near:2,far:30000,maxDist:3000,ctl:'#ctl1',
   presets:[{label:'Von der Seite',pos:function(){return [-st.g/2+40,0,Math.max(820,st.g*1.6)];},target:function(){return [-st.g/2+40,0,0];}},
            {label:'Von oben',ortho:true,pos:function(){return [-st.g/2+60,900,0];},target:function(){return [-st.g/2+60,0,0];},size:function(){return Math.max(240,(st.g+260)/3.1);}},
            {label:'Hinter dem Schirm',pos:[560,70,170],target:[120,-5,0]},{label:'Ins Loch schauen',pos:[-70,28,70],target:[0,0,0]}]});
@@ -58,9 +58,9 @@ function build3D(){if(!v.ok)return;
 var scr=new ScreenCam($('#scr'),{W:480,H:352,sw:SW,sh:SH});
 var LAMP_LAY=[10,10,3,-14]; // gelb ±16 mm, blau ±4,8 mm (k = 1,6)
 var MOT={punkte:{mk:function(){return shiftable(ledsScene(400,pts()),400);},ref:3,key:function(){return st.pts;}},
-         kerze:{mk:function(){return shiftable(candleScene(400,152,-82),400);},ref:8},
-         lampen:{mk:function(){return shiftable(lampsScene(400,1.6,LAMP_LAY),400);},ref:8},
-         haus:{mk:function(){return landscapeScene();},ref:3,far:9000,pos:V3(22,0.2,0)}};
+         kerze:{mk:function(){return shiftable(candleScene(400,152,-82),400);},ref:20},
+         lampen:{mk:function(){return shiftable(lampsScene(400,1.6,LAMP_LAY),400);},ref:20},
+         haus:{mk:function(){return landscapeScene();},ref:12,far:9000,pos:V3(22,0.2,0)}};
 var pend=false;
 function renderScreen(){if(pend)return;pend=true;requestAnimationFrame(function(){pend=false;
   var M=MOT[st.scene],k=M.key?M.key():'';

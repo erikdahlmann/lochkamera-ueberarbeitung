@@ -33,7 +33,10 @@ def lies(*teile):
 def fassung(text, ist3d):
     """Bedingte Blöcke auflösen."""
     muster = re.compile(r'<!--@3d-->\n?(.*?)<!--@2d-->\n?(.*?)<!--@end-->\n?', re.S)
-    return muster.sub(lambda m: m.group(1) if ist3d else m.group(2), text)
+    text = muster.sub(lambda m: m.group(1) if ist3d else m.group(2), text)
+    if '<!--@' in text:
+        raise SystemExit('Unvollständiger Block <!--@3d--> … <!--@2d--> … <!--@end-->')
+    return text
 
 
 def navigation(seite, ist3d):

@@ -27,11 +27,12 @@
 <section class="card">
 <span class="step">Schritt 2</span>
 <h2>Linsen-Labor: Findet das scharfe Bild</h2>
-<p>Ihr habt sechs Linsen. Die Zahl gibt die <b>Brennweite <i>f</i></b> an. Ein Minus bedeutet: Zerstreuungslinse.</p>
+<p>Ihr habt sechs Linsen. Die Zahl gibt die <b>Brennweite <i>f</i></b> an. Ein Minus bedeutet: Zerstreuungslinse. Alle Linsen sind 32 mm groß. Davor sitzt eine <b>Blende</b>: eine Scheibe mit verstellbarer Öffnung <i>d</i>. Ohne Linse ist <i>d</i> einfach das Loch.</p>
 <div><b>Linse im Loch</b><div id="segLens"></div></div>
 <!--@3d-->
 <div id="vLab"></div>
 <p class="cap">3D-Modell (Lochkamera aufgeschnitten). Gestrichelt: so würden die Strahlen hinter dem Schirm weiterlaufen. Damit man die drei Bildpunkte getrennt sieht, sind die Richtungen zu weit entfernten Punkten etwas übertrieben.</p>
+<div id="ctl2">
 <div class="grid2 even">
   <div class="screen screenbox"><canvas id="scr"></canvas><span class="tag">Schirm von hinten gesehen</span><p class="cap">Bild auf dem Schirm (15 cm × 11 cm).</p></div>
   <div>
@@ -41,26 +42,39 @@
   <div class="screen"><canvas id="scr"></canvas><p class="cap">Bild auf dem Schirm (15 cm × 11 cm).</p></div>
 </div>
 <!--@end-->
-<div class="ctls"><div id="sB"></div><div id="sD"></div></div>
+<!--@3d-->
+<!--@2d-->
+<div id="ctl2">
+<!--@end-->
+<div class="ctls"><div id="sB"></div><div id="sD"></div><div id="sG"></div></div>
 <div class="ctls">
   <div><b>Gegenstand</b><div id="segObj"></div></div>
-  <div><b>Hilfe</b><div class="seg"><button id="focusBtn">○ Scharfen Bildpunkt zeigen</button></div></div>
-</div>
-<div class="meters">
-  <div class="meter"><div class="lbl">Lichtfleck eines Punktes (Durchmesser)</div><div class="val" id="mD">–</div><div class="bar"><i id="barD" style="background:#e8590c"></i></div></div>
-  <div class="meter"><div class="lbl">Helligkeit (1-mm-Loch bei 10 cm = 1)</div><div class="val" id="mH">–</div><div class="bar"><i id="barH"></i></div></div>
+  <div><b>Hilfe</b><div class="seg"><button id="focusBtn"></button></div></div>
 <!--@3d-->
-</div>
-  </div>
+  <div><b>Darstellung im Modell</b><div id="segLook"></div></div>
 <!--@2d-->
 <!--@end-->
 </div>
+<p><button class="primary" id="sweep">▶ Schirm langsam verschieben</button></p>
+<div class="meters">
+  <div class="meter"><div class="lbl">Lichtfleck eines Punktes (Durchmesser)</div><div class="val" id="mD">–</div><div class="bar"><i id="barD" style="background:#e8590c"></i></div></div>
+  <div class="meter"><div class="lbl">Helligkeit (1-mm-Loch bei 10 cm = 1)</div><div class="val" id="mH">–</div><div class="bar"><i id="barH"></i></div></div>
+</div>
+<div class="chartbox"><canvas id="chartD"></canvas></div>
+<p class="cap">Diagramm: So groß ist der Lichtfleck eines Punktes bei jedem Abstand <i>b</i>. Der Punkt zeigt die aktuelle Einstellung.</p>
+<!--@3d-->
+</div>
+  </div>
+</div>
+<!--@2d-->
+</div>
+<!--@end-->
 
 <div class="box task"><b>Aufgabe 2 – So geht’s</b>
 <ol>
-<li>Wähle „ohne Linse“ und ein Loch von 10 mm: hell, aber unscharf.</li>
-<li>Setze Linse B ein. Verschiebe den Schirm (Abstand <i>b</i>), bis das Bild scharf ist. Achte auf den Lichtfleck-Wert!</li>
-<li>Mache nun das Loch (den Linsendurchmesser <i>d</i>) größer. Bleibt das Bild scharf?</li>
+<li>Wähle „ohne Linse“ und eine Öffnung von 10 mm: hell, aber unscharf.</li>
+<li>Setze Linse B ein. Verschiebe den Schirm (Abstand <i>b</i>), bis das Bild scharf ist. Achte auf den Lichtfleck-Wert und das Diagramm! Oder tippe auf <b>▶ Schirm langsam verschieben</b>.</li>
+<li>Öffne nun die Blende weiter (<i>d</i> größer). Bleibt das Bild scharf? Was passiert mit der Helligkeit?</li>
 </ol></div>
 
 <div class="box task" data-q="Linsen-Test"><b>Aufgabe 3 – Linsen-Test</b> (Gegenstand: „Haus, 20 m“)
@@ -68,18 +82,18 @@
 <div class="tablewrap"><table class="t" id="lensTable">
 <tr><th>Linse</th><th>f</th><th>scharfes Bild?</th><th>b (mm)</th><th>Bildgröße</th><th></th></tr>
 </table></div>
-<p><button class="primary" id="check">✓ Prüfen</button></p>
+<p><button class="primary" id="check">✓ Prüfen</button> <span class="small" id="checkNote"></span></p>
 <textarea data-save="a3" placeholder="Was fällt euch auf, wenn ihr b und f vergleicht?"></textarea>
 </div>
 
 <details class="merke"><summary>Merke (erst aufklappen, wenn ihr fertig seid)</summary><div>
-<p><b>Sammellinsen</b> (A–D) bündeln das Licht: Die Strahlen eines Punktes treffen sich hinter der Linse wieder in einem Punkt. Dort steht der Schirm richtig – das Bild ist <b>hell und scharf</b>.</p>
+<p><b>Sammellinsen</b> (A–D) bündeln das Licht: Die Strahlen eines Punktes treffen sich hinter der Linse wieder in einem Punkt, dem <b>Bildpunkt</b>. Dort steht der Schirm richtig – das Bild ist <b>hell und scharf</b>. Eine Lochkamera mit Linse heißt deshalb <b>Linsenkamera</b>. So funktionieren auch Fotokamera und Auge.</p>
 <p>Ist der Gegenstand weit weg, liegt das scharfe Bild etwa im Abstand der <b>Brennweite <i>f</i></b> hinter der Linse. Kleine Brennweite → kleines Bild, große Brennweite → großes Bild.</p>
-<p><b>Zerstreuungslinsen</b> (E, F) lenken das Licht noch weiter auseinander. Mit ihnen allein gibt es <b>kein</b> scharfes Bild.</p>
+<p><b>Zerstreuungslinsen</b> (E, F) lenken das Licht noch weiter auseinander. Mit ihnen allein entsteht <b>kein Bild auf dem Schirm</b>.</p>
 </div></details>
 
 <details><summary>Für Profis: Schärfentiefe</summary><div>
-<p>Stellt mit Linse C das Bild scharf und wählt dann den Gegenstand „Kerze, 50 cm“. Jetzt ist es unscharf. Verkleinert den Linsendurchmesser <i>d</i>. Was passiert mit der Schärfe – und mit der Helligkeit? Genau das macht die <b>Blende</b> in einer Fotokamera.</p>
+<p>Stellt mit Linse C das Bild scharf und wählt dann den Gegenstand „Kerze, 50 cm“. Jetzt ist es unscharf. Verkleinert die Öffnung <i>d</i> der Blende. Was passiert mit der Schärfe – und mit der Helligkeit? Genau das macht die <b>Blende</b> in einer Fotokamera.</p>
 <textarea data-save="profi" placeholder="Beobachtung …"></textarea>
 </div></details>
 </section>
@@ -91,7 +105,7 @@
 <ol>
 <li>Messt die Länge eurer Kamera: Wie weit ist das Loch vom Schirm entfernt? Kann man den Abstand verändern?</li>
 <li>Überlegt mit euren Ergebnissen aus Aufgabe 3: Welche Linse passt zu eurer Kamera?</li>
-<li>Vergrößert das Loch und haltet die Linse davor. Richtet die Kamera auf etwas Helles (Fenster, Baum draußen).</li>
+<li>Vergrößert das Loch, bis die Linse genau davor passt. Richtet die Kamera auf etwas Helles (Fenster, Baum draußen).</li>
 <li>Verschiebt den Schirm, bis das Bild scharf ist. Messt dann <i>b</i>.</li>
 </ol></div>
 <div class="tablewrap"><table class="t">
@@ -107,5 +121,5 @@ Eine Linse ist doch nur ein Stück Glas. <b>Wie schafft es Glas, die Richtung de
 <p><button id="copy">📋 Ergebnisse kopieren</button></p>
 </section>
 </main>
-<footer>Station 2 · Lochkamera-Projekt Klasse 8 · Weiter mit der Datei „3_Licht_durch_Glas.html“</footer>
+<footer>Station 2 · Lochkamera-Projekt Klasse 8</footer>
 
